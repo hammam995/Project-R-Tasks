@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
+
 
 public class EnemyAi : MonoBehaviour
 {
@@ -55,9 +57,6 @@ public class EnemyAi : MonoBehaviour
 
 
 
-
-
-
     [Header("Field Of View Attributes")]
     public float radius; // can see radius
     public float Nearradius; // near distance radius
@@ -68,6 +67,13 @@ public class EnemyAi : MonoBehaviour
     public LayerMask obstructionMask; // the obsticales mask
     public bool canSeePlayer;
     public bool Player_inside_near_radius;
+
+
+
+    [Header("Health Attributes")]
+    public float starthealth = 100; // the origin one
+    public float health; // current health
+    public Image healthbar; //for healthbar
 
 
 
@@ -367,4 +373,13 @@ public class EnemyAi : MonoBehaviour
         else if (canSeePlayer) // we do this condition to reset it , in case the player was inside then he went outside the area
             canSeePlayer = false;
     }
+
+    protected void takedamage(float amount) // if a character have a damage
+    {
+        health -= amount;
+        healthbar.fillAmount = health / starthealth;
+    }
+
+
+
 }

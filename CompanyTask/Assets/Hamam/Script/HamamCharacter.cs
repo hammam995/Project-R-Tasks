@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class HamamCharacter : MonoBehaviour
 {
@@ -9,6 +11,12 @@ public class HamamCharacter : MonoBehaviour
     public delegadem delmovemen; //delegade variable for movement and their animation
     public float walkingSpeed = 5;
     public float RotateSpeed = 10;
+
+
+    [Header("Health Attributes")]
+    public float starthealth; // the origin one
+    public float health; // current health
+    public Image healthbar; //for healthbar
 
 
 
