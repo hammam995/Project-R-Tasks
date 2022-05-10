@@ -299,8 +299,27 @@ public class EnemyAi : MonoBehaviour
         myFloat += Time.deltaTime;
         if (myFloat >= tiempoEntreMens || nearState == Near_State_sitiuation.idle)    // in each seccond we will check enter to see the condition
         {
-            nearState = (Near_State_sitiuation)Random.Range(0, 3);
+            /*if(ShieldCreated == true)
+            {
+                Destroy(instShield);
+                ShieldCreated = false;
+            }*/
+            /*if (instShield != null)
+            {
+                Destroy(instShield);
+            }*/
+            
+
+                nearState = (Near_State_sitiuation)Random.Range(0, 3);
             counter++;
+            if(nearState== Near_State_sitiuation.shield)
+            {
+                if (ShieldCreated == true)
+                {
+
+                }
+            }
+
             myFloat = 0; //we will reset it because the transcurrido here will count the secconds assummed
         }
     }
@@ -412,11 +431,11 @@ public class EnemyAi : MonoBehaviour
             Debug.Log("After Shield inistiated");
             ShieldCreated = true;
         }
-        else
+        /*else
         {
             Destroy(instShield,3);
 
-        }
+        }*/
 
 
 
