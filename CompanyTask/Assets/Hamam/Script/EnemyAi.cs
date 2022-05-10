@@ -40,8 +40,10 @@ public class EnemyAi : MonoBehaviour
     [Header("Bullet Attributes")]
     public GameObject BulletPivot;
     public GameObject TheBullet;
+    public GameObject TheMuzzleEffect;
     GameObject instBullet;
     public float shootspeed;
+    GameObject instmuzzle;
 
     [Header("Shooting Attributes")]
     public float myFloat2;
@@ -297,6 +299,9 @@ public class EnemyAi : MonoBehaviour
 
         instBullet.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * shootspeed, ForceMode.Impulse);
         instBullet.transform.SetParent(null);
+
+        instmuzzle = Instantiate(TheMuzzleEffect, BulletPivot.transform.position, BulletPivot.transform.rotation, BulletPivot.transform) as GameObject;
+        Destroy(instmuzzle, 2);
         Destroy(instBullet, 3);
     }
     public void Timer2() // is timer to controll the shooting time for the enemy

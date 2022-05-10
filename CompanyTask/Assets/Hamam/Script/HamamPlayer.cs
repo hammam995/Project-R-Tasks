@@ -51,12 +51,18 @@ public class HamamPlayer : HamamCharacter
             takedamage(other.gameObject.GetComponent<Bullet>().AmountOfDamage);
             Destroy(other);
         }
-          
+    }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.gameObject.tag == "Bullet")
+        {
+            takedamage(collision.gameObject.GetComponent<Bullet>().AmountOfDamage);
+            Destroy(collision.gameObject);
+        }
 
 
     }
-  
-
 
 }

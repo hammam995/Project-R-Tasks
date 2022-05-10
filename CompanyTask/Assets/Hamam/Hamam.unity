@@ -638,9 +638,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4390366181293040709, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
+      propertyPath: TheBullet
+      value: 
+      objectReference: {fileID: 8098934480818727112, guid: a9984cdc0e2e2e44bb88f4447a399dbe, type: 3}
+    - target: {fileID: 4390366181293040709, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
       propertyPath: shootspeed
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 4390366181293040709, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
+      propertyPath: TheMuzzleEffect
+      value: 
+      objectReference: {fileID: 6543707246619394134, guid: 37c7a3c553e2207428b8799ad892bad0, type: 3}
     - target: {fileID: 7393020078434372450, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
       propertyPath: m_Name
       value: EnemyCube
