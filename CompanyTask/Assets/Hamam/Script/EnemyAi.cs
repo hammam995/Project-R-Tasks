@@ -77,6 +77,13 @@ public class EnemyAi : MonoBehaviour
     public float health; // current health
     public Image healthbar; //for healthbar
 
+    [Header("Shield Attributes")]
+    public GameObject TheShield;
+           GameObject instShield;
+    public bool ShieldCreated;
+    public GameObject ShieldPivot;
+
+
 
 
 
@@ -158,6 +165,8 @@ public class EnemyAi : MonoBehaviour
                 aiState = AI_Distance_State.nearDistance;
                 transform.LookAt(player);
 
+
+
             }
             else
             {
@@ -165,7 +174,13 @@ public class EnemyAi : MonoBehaviour
                 nearState = Near_State_sitiuation.idle;
             }
 
-            
+            if(aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.shield)
+            {
+                // destroy the shield
+                ShieldCreated = false;
+                Destroy(instShield);
+
+            }
            
 
 
@@ -195,6 +210,8 @@ public class EnemyAi : MonoBehaviour
                 {
                     case Near_State_sitiuation.shield:
                         myFloat2 = 0;
+                        CreateShield();
+
                         break;
                     case Near_State_sitiuation.explosion:
                         myFloat2 = 0;
@@ -385,6 +402,25 @@ public class EnemyAi : MonoBehaviour
         healthbar.fillAmount = health / starthealth;
     }
 
+    public void CreateShield()
+    {
+        if (ShieldCreated==false)
+        {
+
+            Debug.Log("Before Shield inistiated");
+            instShield = Instantiate(TheShield, transform.position, transform.rotation, ShieldPivot.transform) as GameObject;
+            Debug.Log("After Shield inistiated");
+            ShieldCreated = true;
+        }
+        else
+        {
+            Destroy(instShield,3);
+
+        }
+
+
+
+    }
 
 
 }

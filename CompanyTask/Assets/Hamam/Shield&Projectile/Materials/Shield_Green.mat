@@ -73,17 +73,17 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - ColorBreathing_: 0.66
+    - ColorBreathing_: 0
     - FresnelPower_: 4
     - SphereHardness_: 0.21
     - SphereMask_: 0
-    - SphereRadius_: 0.32
+    - SphereRadius_: 0
     - Vector1_5b7f725f9c624db9bcbfaa4d7a5ad6af: 10
     - Vector1_623017abf9cd44e6b0ec5df12afc60be: 0.48
     - Vector1_774715637d544e0c9f3f50368badd1f8: 1
     - Vector1_8d5200ae7fdb41d2ab7d29dcdfa4df50: 6
     - VertexBreathing_: 0.56
-    - VertexFrequency_: 4
+    - VertexFrequency_: 0
     - _AddPrecomputedVelocity: 0
     - _AlphaCutoffEnable: 0
     - _AlphaDstBlend: 10

@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 419230059809877750}
   m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: -4.6, y: 1.354, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -109,9 +109,9 @@ SphereCollider:
   m_GameObject: {fileID: 419230059809877750}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 1.2
+  m_Radius: 1.2016364
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &653037704619718273
 MonoBehaviour:
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 419230059809877750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b518ce1815f75d041a5f9401565e6f53, type: 3}
+  m_Script: {fileID: 11500000, guid: 85a1670ddbb187c45b75daec4597dbcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   shieldRipples: {fileID: 4569542008578124784, guid: 9f98b6665ed68974893a4bc0af74e3f8, type: 3}

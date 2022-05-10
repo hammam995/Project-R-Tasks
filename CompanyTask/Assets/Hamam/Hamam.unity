@@ -123,10 +123,45 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: c61e684e0f74a0f40a162a2ea6b3396a, type: 2}
+--- !u!1 &517853178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 517853179}
+  m_Layer: 0
+  m_Name: ShieldPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &517853179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517853178}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1083586912}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &663964886 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1472669333, guid: de557c5d3afc613488f02dc7253093c6, type: 3}
   m_PrefabInstance: {fileID: 7343237674566902096}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1083586912 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7393020078434372457, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
+  m_PrefabInstance: {fileID: 5045804256260110173}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1472328529 stripped
 Transform:
@@ -637,6 +672,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4390366181293040709, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
+      propertyPath: TheShield
+      value: 
+      objectReference: {fileID: 419230059809877750, guid: 0f933251899050c4dadc659948e75471, type: 3}
+    - target: {fileID: 4390366181293040709, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
+      propertyPath: ShieldPivot
+      value: 
+      objectReference: {fileID: 517853178}
     - target: {fileID: 7393020078434372450, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
       propertyPath: m_Name
       value: EnemyCube
