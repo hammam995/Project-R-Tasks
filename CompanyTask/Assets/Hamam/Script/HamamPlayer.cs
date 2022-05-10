@@ -59,7 +59,7 @@ public class HamamPlayer : HamamCharacter
         if (collision.gameObject.tag == "Bullet")
         {
             takedamage(collision.gameObject.GetComponent<Bullet>().AmountOfDamage);
-            Destroy(collision.gameObject);
+          //  Destroy(collision.gameObject);
         }
 
 

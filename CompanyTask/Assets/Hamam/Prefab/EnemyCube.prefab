@@ -234,8 +234,9 @@ MonoBehaviour:
   tiempoEntreMens: 3
   counter: 0
   BulletPivot: {fileID: 8563741213693366572}
-  TheBullet: {fileID: 8772199365685936935, guid: 91aacc90d139854479c0460e95ce8a8f, type: 3}
-  shootspeed: 20
+  TheBullet: {fileID: 8098934480818727112, guid: a9984cdc0e2e2e44bb88f4447a399dbe, type: 3}
+  TheMuzzleEffect: {fileID: 6543707246619394134, guid: 37c7a3c553e2207428b8799ad892bad0, type: 3}
+  shootspeed: 30
   myFloat2: 0
   tiempoEntreMens2: 2
   canWeSeeThePlayer: 0
