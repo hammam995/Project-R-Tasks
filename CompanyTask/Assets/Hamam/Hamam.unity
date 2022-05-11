@@ -685,13 +685,33 @@ PrefabInstance:
       value: 2.0655
       objectReference: {fileID: 0}
     - target: {fileID: 4390366181293040709, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
+      propertyPath: maxTired
+      value: 102
+      objectReference: {fileID: 0}
+    - target: {fileID: 4390366181293040709, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
+      propertyPath: minTired
+      value: 82
+      objectReference: {fileID: 0}
+    - target: {fileID: 4390366181293040709, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
       propertyPath: TheShield
       value: 
       objectReference: {fileID: 419230059809877750, guid: 0f933251899050c4dadc659948e75471, type: 3}
     - target: {fileID: 4390366181293040709, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
+      propertyPath: maxShield
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4390366181293040709, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
       propertyPath: ShieldPivot
       value: 
       objectReference: {fileID: 517853178}
+    - target: {fileID: 4390366181293040709, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
+      propertyPath: maxEplosion
+      value: 81
+      objectReference: {fileID: 0}
+    - target: {fileID: 4390366181293040709, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
+      propertyPath: minExplosion
+      value: 51
+      objectReference: {fileID: 0}
     - target: {fileID: 7393020078434372450, guid: bbcfe0782277d6c47b9ee5f0033a00b0, type: 3}
       propertyPath: m_Name
       value: EnemyCube

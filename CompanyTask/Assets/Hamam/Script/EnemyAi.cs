@@ -35,8 +35,20 @@ public class EnemyAi : MonoBehaviour
     public int tiempoEntreMens = 5; // the time that which we enter it , and iit does not matter if we change it
     public int counter = 0;
 
+    [Header("Random Probability Near States Attributes")]
+    public int digit;
+    public string CurrrentState;
+    public int minShield;
+    public int maxShield;
+    public int minExplosion;
+    public int maxEplosion;
+    public int minTired;
+    public int maxTired;
 
-    
+
+
+
+
     [Header("Bullet Attributes")]
     public GameObject BulletPivot;
     public GameObject TheBullet;
@@ -223,7 +235,8 @@ public class EnemyAi : MonoBehaviour
                         break;
                 }
                 myFloat2 = 0;
-                Timer();
+                TimerRandomProbability();
+               // Timer(); the original random states
                 // we have to put switch case for every state
                 break;
             case AI_Distance_State.idle:
@@ -439,6 +452,49 @@ public class EnemyAi : MonoBehaviour
 
 
 
+    }
+    public void RandomPosibilityState()
+    {
+        digit = Random.Range(0, 102);
+        if (digit >= minShield && digit <= maxShield)
+        {
+            nearState = Near_State_sitiuation.shield;
+            CurrrentState = "1 is shield";
+        }
+        if (digit >= minExplosion && digit <= maxEplosion)
+        {
+            nearState = Near_State_sitiuation.explosion;
+            CurrrentState = "2 is EXP";
+        }
+        if (digit >= minTired && digit <= maxTired)
+        {
+            nearState = Near_State_sitiuation.tired;
+            CurrrentState = "3 is tired";
+        }
+
+    }
+
+
+    public void TimerRandomProbability() // is timer to controll the shooting time for the enemy
+    {
+        // if we enter the area directly we will change from idle to the new state then after that we will change every specific amoiunt of secconds
+        myFloat += Time.deltaTime;
+        if (myFloat >= tiempoEntreMens || nearState == Near_State_sitiuation.idle)    // in each seccond we will check enter to see the condition
+        {
+            //  nearState = (Near_State_sitiuation)Random.Range(0, 3); // change this line by putting our random state function
+            RandomPosibilityState();
+
+            counter++;
+            if (nearState == Near_State_sitiuation.shield)
+            {
+                if (ShieldCreated == true)
+                {
+
+                }
+            }
+
+            myFloat = 0; //we will reset it because the transcurrido here will count the secconds assummed
+        }
     }
 
 
