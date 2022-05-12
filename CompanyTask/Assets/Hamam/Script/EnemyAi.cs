@@ -93,6 +93,16 @@ public class EnemyAi : MonoBehaviour
     public GameObject ShieldPivot;
 
 
+    [Header("Explosion Attributes")]
+    public GameObject TheExplosion;
+    GameObject instExplosion;
+    public bool ExplosionCreated;
+    public GameObject ExplosionPivot;
+
+
+
+
+
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -129,13 +139,19 @@ public class EnemyAi : MonoBehaviour
                     nearState = Near_State_sitiuation.idle;
                 }
 
-                if (aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.shield)
+                if (aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.shield) // shield conditions are correct
                 {
-                    // destroy the shield
                     ShieldCreated = false;
                     Destroy(instShield);
-
                 }
+
+                if (aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.explosion)
+                {
+                    ExplosionCreated = false;
+                    Destroy(instExplosion);
+                }
+
+
 
 
 
@@ -170,6 +186,7 @@ public class EnemyAi : MonoBehaviour
                             break;
                         case Near_State_sitiuation.explosion:
                             myFloat2 = 0;
+                            CreateExplosion();
                             break;
                         case Near_State_sitiuation.tired:
                             myFloat2 = 0;
@@ -207,6 +224,14 @@ public class EnemyAi : MonoBehaviour
                 nearState = (Near_State_sitiuation)Random.Range(0, 3);
             counter++;
             if(nearState== Near_State_sitiuation.shield)
+            {
+                if (ShieldCreated == true)
+                {
+
+                }
+            }
+
+            if (nearState == Near_State_sitiuation.explosion)
             {
                 if (ShieldCreated == true)
                 {
@@ -302,6 +327,19 @@ public class EnemyAi : MonoBehaviour
             ShieldCreated = true;
         }
     }
+
+    public void CreateExplosion()
+    {
+        if (ExplosionCreated == false)
+        {
+            Debug.Log("Before Explosion inistiated");
+            instExplosion = Instantiate(TheExplosion, transform.position, transform.rotation, ExplosionPivot.transform) as GameObject;
+            Debug.Log("After Explosion inistiated");
+            ExplosionCreated = true;
+        }
+    }
+
+
     public void RandomPosibilityState() // to do the decision in transition between the states of the near area states
     {
         digit = Random.Range(0, 102);
