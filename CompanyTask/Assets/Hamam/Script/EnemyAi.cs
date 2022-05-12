@@ -17,11 +17,6 @@ public class EnemyAi : MonoBehaviour
 
 
 
-    [Header("Drawing Gizmos Attributes")]
-    public float farSpawnRadius;
-    public float nearSpawnRadius;
-
-
 
     public enum AI_Distance_State { nearDistance, farDistance , idle  };
     public enum Near_State_sitiuation { shield, tired , explosion , idle };
@@ -40,11 +35,17 @@ public class EnemyAi : MonoBehaviour
     [Header("Random Probability Near States Attributes")]
     public int digit;
     public string CurrrentState;
+    [Range(0, 102)]
     public int minShield;
+    [Range(0, 102)]
     public int maxShield;
+    [Range(0, 102)]
     public int minExplosion;
+    [Range(0, 102)]
     public int maxEplosion;
+    [Range(0, 102)]
     public int minTired;
+    [Range(0, 102)]
     public int maxTired;
 
 
@@ -63,12 +64,6 @@ public class EnemyAi : MonoBehaviour
     public float myFloat2;
     public int tiempoEntreMens2 = 5; // the time that which we enter it , and iit does not matter if we change it
 
-
-    public bool canWeSeeThePlayer;
-    public float CanSeeRadiuous;
-    public float myangle;
-
-    public GameObject currentHitGameObject;
 
 
 
@@ -98,78 +93,25 @@ public class EnemyAi : MonoBehaviour
     public GameObject ShieldPivot;
 
 
-
-
-
-
-
-
-
-
-
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-
-        
-
-
     }
 
     void Start()
     {
-       /* if (playerRef != null)
-        {
-            StartCoroutine(FOVRoutine());
-        }
-        else
-        {
-            playerRef = GameObject.FindGameObjectWithTag("Player");
-
-            StartCoroutine(FOVRoutine());
-        }
-        */
-
         aiState = AI_Distance_State.idle;
         nearState = Near_State_sitiuation.idle;
-
-
-
     }
 
     void Update()
     {
-        /*
-
-        if (dist <= Nearradius && canSeePlayer) // we are in near radius
-        {
-            Player_inside_near_radius = true;
-            nearState = Near_State_sitiuation.shield;
-            myFloat2 = 0;
-        }
-        else
-            Player_inside_near_radius = false;
-
-
-        if (canSeePlayer && Player_inside_near_radius == false) // we are in far radius
-        {
-            aiState = AI_Distance_State.farDistance;
-            nearState = Near_State_sitiuation.idle;
-        }
-        if (canSeePlayer == false) // we are outside the far radius and outside the near radius
-        {
-            aiState = AI_Distance_State.idle;
-            nearState = Near_State_sitiuation.idle;
-            myFloat = 0;
-            myFloat2 = 0;
-
-        }*/
+        
         if (StartEnemySystem)
         {
             if (canSeePlayer) // then he is in far area
             {
-                /*aiState = AI_Distance_State.farDistance;
-                nearState = Near_State_sitiuation.idle;*/
+               
 
                 if (dist <= Nearradius) // if near
                 {
@@ -246,92 +188,22 @@ public class EnemyAi : MonoBehaviour
                 default:
                     break;
             }
-
-            // new switch case depend on the field of the view
-
-
-
-            /*dist = Vector3.Distance(player.position, transform.position);
-           // canWeSeeThePlayer = CanSeePlayer();
-                if (dist > nearSpawnRadius)
-                {
-                    aiState = AI_Distance_State.farDistance;
-                    nearState = Near_State_sitiuation.idle;
-                    myFloat = 0;
-                }
-                else
-                {
-                    aiState = AI_Distance_State.nearDistance;
-                    myFloat2 = 0;
-                }
-            switch (aiState)
-            {
-                case AI_Distance_State.farDistance:
-
-                    CurrentState = "far Distance";
-                    transform.LookAt(player);
-                    if (canWeSeeThePlayer)
-                    {
-                        Timer2();
-                    }
-                    break;
-                case AI_Distance_State.nearDistance:
-                    CurrentState = "near Distance";
-                    Timer();
-                    // we have to put switch case for every state
-                    break;
-                case AI_Distance_State.idle:
-                    break;
-                default:
-                    break;
-            }
-            */
+            // new switch case depend on the field of the view           
         }
-
-
-
-
     }
-       
-
         
 
-    public void Distance()
+    public void Distance() // Extra function
     {
         dist = Vector3.Distance(player.position, transform.position);
     }
-     /*  private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, farSpawnRadius);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, nearSpawnRadius);
-         if(player!= null)
-         {
-             Gizmos.color = Color.black;
-             Gizmos.DrawLine(transform.position, player.transform.position );
-         }
-    }
-    */
-
-
+    
     public void Timer() // is timer to controll the shooting time for the enemy
     {
         // if we enter the area directly we will change from idle to the new state then after that we will change every specific amoiunt of secconds
         myFloat += Time.deltaTime;
         if (myFloat >= tiempoEntreMens || nearState == Near_State_sitiuation.idle)    // in each seccond we will check enter to see the condition
         {
-            /*if(ShieldCreated == true)
-            {
-                Destroy(instShield);
-                ShieldCreated = false;
-            }*/
-            /*if (instShield != null)
-            {
-                Destroy(instShield);
-            }*/
-            
-
                 nearState = (Near_State_sitiuation)Random.Range(0, 3);
             counter++;
             if(nearState== Near_State_sitiuation.shield)
@@ -341,10 +213,11 @@ public class EnemyAi : MonoBehaviour
 
                 }
             }
-
             myFloat = 0; //we will reset it because the transcurrido here will count the secconds assummed
         }
     }
+
+
     public void shoot() 
     {
         instBullet = Instantiate(TheBullet, BulletPivot.transform.position, BulletPivot.transform.rotation, BulletPivot.transform) as GameObject;
@@ -362,6 +235,8 @@ public class EnemyAi : MonoBehaviour
         Destroy(instmuzzle, 2);
         Destroy(instBullet, 3);
     }
+
+
     public void Timer2() // is timer to controll the shooting time for the enemy
     {
             myFloat2 += Time.deltaTime;
@@ -373,36 +248,10 @@ public class EnemyAi : MonoBehaviour
             }
     }
 
-        
-
-
-     public bool CanSeePlayer() // method to check if the Enemy can see the Player in the same level and in Angle of vistion but if the Player was behind the enemy the enemy can not see him 
-     {
-         Vector3 direction = (player.position - transform.position).normalized;
-         Debug.DrawRay(transform.position, direction * dist, Color.white); // to draw the ray line
-         myangle = Vector3.Angle(transform.forward, direction); // the myangle is 45 in the condition
-         Ray ray = new Ray(transform.position, direction);
-         if (Physics.Raycast(ray, out RaycastHit hit, dist))
-         {
-            currentHitGameObject = hit.transform.gameObject;
-             // Debug.Log("the collid is " + hit.collider.tag);
-             if (hit.transform.tag == "Player" && (myangle > 0f && myangle <= 90)) // if wecan see the chracter straightly in our face in the area of the vistion return true
-             {
-                 // Debug.Log("the myangle value is = " + myangle);
-                 return true;
-             }
-            else
-            {
-                return false;
-            }
-         }
-         return false;
-     }
 
     private IEnumerator FOVRoutine()
     {
         WaitForSeconds wait = new WaitForSeconds(0.2f);
-
         while (true) // infinite loop in the coroutine as long is the condition is true , we will keep doing thi routine of seeing the player permenantly
         {
             yield return wait;
@@ -447,22 +296,13 @@ public class EnemyAi : MonoBehaviour
     {
         if (ShieldCreated==false)
         {
-
             Debug.Log("Before Shield inistiated");
             instShield = Instantiate(TheShield, transform.position, transform.rotation, ShieldPivot.transform) as GameObject;
             Debug.Log("After Shield inistiated");
             ShieldCreated = true;
         }
-        /*else
-        {
-            Destroy(instShield,3);
-
-        }*/
-
-
-
     }
-    public void RandomPosibilityState()
+    public void RandomPosibilityState() // to do the decision in transition between the states of the near area states
     {
         digit = Random.Range(0, 102);
         if (digit >= minShield && digit <= maxShield)
@@ -480,7 +320,6 @@ public class EnemyAi : MonoBehaviour
             nearState = Near_State_sitiuation.tired;
             CurrrentState = "3 is tired";
         }
-
     }
 
 
@@ -492,7 +331,6 @@ public class EnemyAi : MonoBehaviour
         {
             //  nearState = (Near_State_sitiuation)Random.Range(0, 3); // change this line by putting our random state function
             RandomPosibilityState();
-
             counter++;
             if (nearState == Near_State_sitiuation.shield)
             {
@@ -501,14 +339,12 @@ public class EnemyAi : MonoBehaviour
 
                 }
             }
-
             myFloat = 0; //we will reset it because the transcurrido here will count the secconds assummed
         }
     }
 
     public void StartEnemySystemBehaviour()
     {
-
         if (playerRef != null)
         {
             StartEnemySystem = true;
@@ -516,14 +352,9 @@ public class EnemyAi : MonoBehaviour
         }
         else
         {
-
             playerRef = GameObject.FindGameObjectWithTag("Player");
             StartEnemySystem = true;
             StartCoroutine(FOVRoutine());
         }
-
-
     }
-
-
 }
