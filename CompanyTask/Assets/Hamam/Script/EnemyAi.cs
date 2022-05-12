@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class EnemyAi : MonoBehaviour
 {
+    public bool StartEnemySystem;
+
     [Header("Player Attributes")]
     Transform player;
     public float dist;
@@ -116,8 +118,7 @@ public class EnemyAi : MonoBehaviour
 
     void Start()
     {
-        // CanSeeRadiuous = farSpawnRadius;
-        if (playerRef != null)
+       /* if (playerRef != null)
         {
             StartCoroutine(FOVRoutine());
         }
@@ -127,7 +128,7 @@ public class EnemyAi : MonoBehaviour
 
             StartCoroutine(FOVRoutine());
         }
-
+        */
 
         aiState = AI_Distance_State.idle;
         nearState = Near_State_sitiuation.idle;
@@ -163,129 +164,137 @@ public class EnemyAi : MonoBehaviour
             myFloat2 = 0;
 
         }*/
-
-
-        if (canSeePlayer) // then he is in far area
+        if (StartEnemySystem)
         {
-            /*aiState = AI_Distance_State.farDistance;
-            nearState = Near_State_sitiuation.idle;*/
-
-            if (dist <= Nearradius) // if near
+            if (canSeePlayer) // then he is in far area
             {
+                /*aiState = AI_Distance_State.farDistance;
+                nearState = Near_State_sitiuation.idle;*/
 
-                myFloat2 = 0;
-                aiState = AI_Distance_State.nearDistance;
-                transform.LookAt(player);
+                if (dist <= Nearradius) // if near
+                {
+
+                    myFloat2 = 0;
+                    aiState = AI_Distance_State.nearDistance;
+                    transform.LookAt(player);
+
+
+
+                }
+                else
+                {
+                    aiState = AI_Distance_State.farDistance;
+                    nearState = Near_State_sitiuation.idle;
+                }
+
+                if (aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.shield)
+                {
+                    // destroy the shield
+                    ShieldCreated = false;
+                    Destroy(instShield);
+
+                }
 
 
 
             }
-            else
+            else // can see player is ==false
             {
-                aiState = AI_Distance_State.farDistance;
+                aiState = AI_Distance_State.idle;
                 nearState = Near_State_sitiuation.idle;
+
+
             }
 
-            if(aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.shield)
+            // new switch case depend on the field of the view
+            switch (aiState)
             {
-                // destroy the shield
-                ShieldCreated = false;
-                Destroy(instShield);
+                case AI_Distance_State.farDistance:
 
-            }
-           
-
-
-        }
-        else // can see player is ==false
-        {
-            aiState = AI_Distance_State.idle;
-            nearState = Near_State_sitiuation.idle;
-
-
-        }
-
-        // new switch case depend on the field of the view
-        switch (aiState)
-        {
-            case AI_Distance_State.farDistance:
-
-                CurrentState = "far Distance";
-                transform.LookAt(player);                
+                    CurrentState = "far Distance";
+                    transform.LookAt(player);
                     Timer2();
 
-                break;
-            case AI_Distance_State.nearDistance:
-                myFloat2 = 0;
-                CurrentState = "near Distance";
-                switch (nearState)
-                {
-                    case Near_State_sitiuation.shield:
-                        myFloat2 = 0;
-                        CreateShield();
+                    break;
+                case AI_Distance_State.nearDistance:
+                    myFloat2 = 0;
+                    CurrentState = "near Distance";
+                    switch (nearState)
+                    {
+                        case Near_State_sitiuation.shield:
+                            myFloat2 = 0;
+                            CreateShield();
 
-                        break;
-                    case Near_State_sitiuation.explosion:
-                        myFloat2 = 0;
-                        break;
-                    case Near_State_sitiuation.tired:
-                        myFloat2 = 0;
-                        break;
-                    default:
-                        break;
+                            break;
+                        case Near_State_sitiuation.explosion:
+                            myFloat2 = 0;
+                            break;
+                        case Near_State_sitiuation.tired:
+                            myFloat2 = 0;
+                            break;
+                        default:
+                            break;
+                    }
+                    myFloat2 = 0;
+                    TimerRandomProbability();
+                    // Timer(); the original random states
+                    // we have to put switch case for every state
+                    break;
+                case AI_Distance_State.idle:
+                    myFloat2 = 0; // the time for shooting the player will not shoot
+                    break;
+                default:
+                    break;
+            }
+
+            // new switch case depend on the field of the view
+
+
+
+            /*dist = Vector3.Distance(player.position, transform.position);
+           // canWeSeeThePlayer = CanSeePlayer();
+                if (dist > nearSpawnRadius)
+                {
+                    aiState = AI_Distance_State.farDistance;
+                    nearState = Near_State_sitiuation.idle;
+                    myFloat = 0;
                 }
-                myFloat2 = 0;
-                TimerRandomProbability();
-               // Timer(); the original random states
-                // we have to put switch case for every state
-                break;
-            case AI_Distance_State.idle:
-                myFloat2 = 0; // the time for shooting the player will not shoot
-                break;
-            default:
-                break;
+                else
+                {
+                    aiState = AI_Distance_State.nearDistance;
+                    myFloat2 = 0;
+                }
+            switch (aiState)
+            {
+                case AI_Distance_State.farDistance:
+
+                    CurrentState = "far Distance";
+                    transform.LookAt(player);
+                    if (canWeSeeThePlayer)
+                    {
+                        Timer2();
+                    }
+                    break;
+                case AI_Distance_State.nearDistance:
+                    CurrentState = "near Distance";
+                    Timer();
+                    // we have to put switch case for every state
+                    break;
+                case AI_Distance_State.idle:
+                    break;
+                default:
+                    break;
+            }
+            */
         }
 
-        // new switch case depend on the field of the view
 
 
 
-        /*dist = Vector3.Distance(player.position, transform.position);
-       // canWeSeeThePlayer = CanSeePlayer();
-            if (dist > nearSpawnRadius)
-            {
-                aiState = AI_Distance_State.farDistance;
-                nearState = Near_State_sitiuation.idle;
-                myFloat = 0;
-            }
-            else
-            {
-                aiState = AI_Distance_State.nearDistance;
-                myFloat2 = 0;
-            }
-        switch (aiState)
-        {
-            case AI_Distance_State.farDistance:
-
-                CurrentState = "far Distance";
-                transform.LookAt(player);
-                if (canWeSeeThePlayer)
-                {
-                    Timer2();
-                }
-                break;
-            case AI_Distance_State.nearDistance:
-                CurrentState = "near Distance";
-                Timer();
-                // we have to put switch case for every state
-                break;
-            case AI_Distance_State.idle:
-                break;
-            default:
-                break;
-        }
-        */
     }
+       
+
+        
 
     public void Distance()
     {
@@ -495,6 +504,25 @@ public class EnemyAi : MonoBehaviour
 
             myFloat = 0; //we will reset it because the transcurrido here will count the secconds assummed
         }
+    }
+
+    public void StartEnemySystemBehaviour()
+    {
+
+        if (playerRef != null)
+        {
+            StartEnemySystem = true;
+            StartCoroutine(FOVRoutine());
+        }
+        else
+        {
+
+            playerRef = GameObject.FindGameObjectWithTag("Player");
+            StartEnemySystem = true;
+            StartCoroutine(FOVRoutine());
+        }
+
+
     }
 
 

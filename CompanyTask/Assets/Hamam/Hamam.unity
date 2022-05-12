@@ -860,6 +860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bbb4555dd57b3b4abba98d05fdd46d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartEnemySystem: 0
   dist: 0
   HamamScript: {fileID: 0}
   farSpawnRadius: 35
@@ -1099,7 +1100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6217788253007684193, guid: de557c5d3afc613488f02dc7253093c6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.15
+      value: -29.37
       objectReference: {fileID: 0}
     - target: {fileID: 6217788253007684193, guid: de557c5d3afc613488f02dc7253093c6, type: 3}
       propertyPath: m_LocalRotation.w
