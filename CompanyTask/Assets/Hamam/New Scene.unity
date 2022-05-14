@@ -574,6 +574,9 @@ MonoBehaviour:
   maxEplosion: 81
   minTired: 82
   maxTired: 102
+  ShieldPercentage: 50
+  ExplosionPercentage: 30
+  TiredPercentage: 20
 --- !u!4 &1946799252
 Transform:
   m_ObjectHideFlags: 0

@@ -849,8 +849,20 @@ PrefabInstance:
       value: EnemyCube
       objectReference: {fileID: 0}
     - target: {fileID: 5184239140556945776, guid: 4edd4251460167545be662009c24b3ec, type: 3}
+      propertyPath: maxShield
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184239140556945776, guid: 4edd4251460167545be662009c24b3ec, type: 3}
       propertyPath: playerRef
       value: 
       objectReference: {fileID: 310572898}
+    - target: {fileID: 5184239140556945776, guid: 4edd4251460167545be662009c24b3ec, type: 3}
+      propertyPath: maxEplosion
+      value: 91
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184239140556945776, guid: 4edd4251460167545be662009c24b3ec, type: 3}
+      propertyPath: minExplosion
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4edd4251460167545be662009c24b3ec, type: 3}
