@@ -7,24 +7,24 @@ public class testingr : MonoBehaviour
 
     public int digit;
     public string CurrrentState;
-    public int minShield;
-    public int maxShield; 
-    public int minExplosion;
-    public int maxEplosion;
-    public int minTired;
-    public int maxTired;
+    [HideInInspector] public int minShield;
+    [HideInInspector] public int maxShield;
+    [HideInInspector] public int minExplosion;
+    [HideInInspector] public int maxEplosion;
+    [HideInInspector] public int minTired;
+    [HideInInspector] public int maxTired;
 
+
+    [Header("Near StatesPercentage Attributes")]
+    [Range(0, 100)]
     public int ShieldPercentage;
+    [Range(0, 100)]
     public int ExplosionPercentage;
+    [Range(0, 100)]
     public int TiredPercentage;
     void Start()
     {
-        minShield = 0;
-        maxShield = ShieldPercentage;
-        minExplosion = maxShield + 1;
-        maxEplosion = minExplosion+ExplosionPercentage;
-        minTired = maxEplosion + 1;
-        maxTired = minTired+TiredPercentage;
+        settingThevalue();
         // depends on the states we increase it , or for better solution start from minus
 
         InvokeRepeating("State", 2, 2);
@@ -45,6 +45,15 @@ public class testingr : MonoBehaviour
         if (digit >= minTired && digit <= maxTired)
             CurrrentState = "3 is tired";
        
+    }
+    public void settingThevalue()
+    {
+        minShield = 0;
+        maxShield = ShieldPercentage;
+        minExplosion = maxShield + 1;
+        maxEplosion = minExplosion + ExplosionPercentage;
+        minTired = maxEplosion + 1;
+        maxTired = minTired + TiredPercentage;
     }
 
     /*  digit = Random.Range(0, 102);
