@@ -28,9 +28,10 @@ public class EnemyAi : MonoBehaviour
 
 
     [Header("Near States Attributes")]
-    public float myFloat;
-    public int tiempoEntreMens = 5; // the time that which we enter it , and iit does not matter if we change it
-    public int counter = 0;
+    [HideInInspector] public float NearStatesTransitionTimer; // it will change by the system ,  myfloat 
+    public int NearStatesIntervalTimer = 5; // The user can change it as much he want ,  tiempoEntreMens
+    public int counter = 0; // is counter just to check if we are moving between the states and to check when we do the transition , the sitituation of the objects we created , (shield, Explosion)
+   
 
     [Header("Random Probability Near States Attributes")]
     public int digit;
@@ -57,28 +58,26 @@ public class EnemyAi : MonoBehaviour
     public GameObject TheBullet;
     public GameObject TheMuzzleEffect;
     GameObject instBullet;
-    public float shootspeed;
     GameObject instmuzzle;
+    public float shootspeed; // to control the bullet speed
 
     [Header("Shooting Attributes")]
-    public float myFloat2;
-    public int tiempoEntreMens2 = 5; // the time that which we enter it , and iit does not matter if we change it
+    [HideInInspector] public float ShootTimer; // it will change by the system ,  myfloat2 
+    public int ShootingIntervalTime = 5; // The user can change it as much he want ,  tiempoEntreMens2
 
 
 
 
 
     [Header("Field Of View Attributes")]
-    public float radius; // can see radius
-    public float Nearradius; // near distance radius
+    public float radius; // is the large Radius and area so we can see the player
+    public float Nearradius; // near distance radius , is the small and near Radius area so we from it we do the transitions between the near states sitiuation
     [Range(0, 360)]
     public float angle; // angle of vision
     public GameObject playerRef; // player refrence to take the player information
     public LayerMask targetMask; // player mask
     public LayerMask obstructionMask; // the obsticales mask
-    public bool canSeePlayer;
-    public bool Player_inside_near_radius;
-
+    [HideInInspector] public bool canSeePlayer;
 
 
     [Header("Health Attributes")]
@@ -89,82 +88,32 @@ public class EnemyAi : MonoBehaviour
     [Header("Shield Attributes")]
     public GameObject TheShield;
            GameObject instShield;
-    public bool ShieldCreated;
     public GameObject ShieldPivot;
+    [HideInInspector] public bool ShieldCreated;
 
 
     [Header("Explosion Attributes")]
     public GameObject TheExplosion;
-    GameObject instExplosion;
-    public bool ExplosionCreated;
+           GameObject instExplosion;
     public GameObject ExplosionPivot;
-
-
-
-
+    [HideInInspector] public bool ExplosionCreated;
 
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        FindingPlayer();
     }
 
     void Start()
     {
-        aiState = AI_Distance_State.idle;
-        nearState = Near_State_sitiuation.idle;
+        SettingStatesValue();
         settingThevalue();
     }
 
     void Update()
     {
-        
         if (StartEnemySystem)
         {
-            if (canSeePlayer) // then he is in far area
-            {
-               
-
-                if (dist <= Nearradius) // if near
-                {
-
-                    myFloat2 = 0;
-                    aiState = AI_Distance_State.nearDistance;
-                    transform.LookAt(player);
-
-
-
-                }
-                else
-                {
-                    aiState = AI_Distance_State.farDistance;
-                    nearState = Near_State_sitiuation.idle;
-                }
-
-                if (aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.shield) // shield conditions are correct
-                {
-                    ShieldCreated = false;
-                    Destroy(instShield);
-                }
-
-                if (aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.explosion)
-                {
-                    ExplosionCreated = false;
-                    Destroy(instExplosion);
-                }
-
-
-
-
-
-            }
-            else // can see player is ==false
-            {
-                aiState = AI_Distance_State.idle;
-                nearState = Near_State_sitiuation.idle;
-
-
-            }
-
+            NearStatesActions();
             // new switch case depend on the field of the view
             switch (aiState)
             {
@@ -176,32 +125,31 @@ public class EnemyAi : MonoBehaviour
 
                     break;
                 case AI_Distance_State.nearDistance:
-                    myFloat2 = 0;
+                    ShootTimer = 0;
                     CurrentState = "near Distance";
                     switch (nearState)
                     {
                         case Near_State_sitiuation.shield:
-                            myFloat2 = 0;
+                            ShootTimer = 0;
                             CreateShield();
 
                             break;
                         case Near_State_sitiuation.explosion:
-                            myFloat2 = 0;
+                            ShootTimer = 0;
                             CreateExplosion();
                             break;
                         case Near_State_sitiuation.tired:
-                            myFloat2 = 0;
+                            ShootTimer = 0;
                             break;
                         default:
                             break;
                     }
-                    myFloat2 = 0;
+                    ShootTimer = 0;
                     TimerRandomProbability();
-                    // Timer(); the original random states
                     // we have to put switch case for every state
                     break;
                 case AI_Distance_State.idle:
-                    myFloat2 = 0; // the time for shooting the player will not shoot
+                    ShootTimer = 0; // the time for shooting the player will not shoot
                     break;
                 default:
                     break;
@@ -216,11 +164,11 @@ public class EnemyAi : MonoBehaviour
         dist = Vector3.Distance(player.position, transform.position);
     }
     
-    public void Timer() // is timer to controll the shooting time for the enemy
+    public void Timer() // is timer to controll the near states sitiuations and their actions
     {
         // if we enter the area directly we will change from idle to the new state then after that we will change every specific amoiunt of secconds
-        myFloat += Time.deltaTime;
-        if (myFloat >= tiempoEntreMens || nearState == Near_State_sitiuation.idle)    // in each seccond we will check enter to see the condition
+        NearStatesTransitionTimer += Time.deltaTime;
+        if (NearStatesTransitionTimer >= NearStatesIntervalTimer || nearState == Near_State_sitiuation.idle) 
         {
                 nearState = (Near_State_sitiuation)Random.Range(0, 3);
             counter++;
@@ -239,12 +187,12 @@ public class EnemyAi : MonoBehaviour
 
                 }
             }
-            myFloat = 0; //we will reset it because the transcurrido here will count the secconds assummed
+            NearStatesTransitionTimer = 0; //we will reset it because the transcurrido here will count the secconds assummed
         }
     }
 
 
-    public void shoot() 
+    public void shoot() // shooting behavior , creating the bullet and it's attributes
     {
         instBullet = Instantiate(TheBullet, BulletPivot.transform.position, BulletPivot.transform.rotation, BulletPivot.transform) as GameObject;
         if (instBullet.GetComponent<Rigidbody>() == null)
@@ -263,21 +211,21 @@ public class EnemyAi : MonoBehaviour
     }
 
 
-    public void Timer2() // is timer to controll the shooting time for the enemy
+    public void Timer2() // is timer to controll the shooting time for the enemy , more or les is the fire rate
     {
-            myFloat2 += Time.deltaTime;
-            if (myFloat2 >= tiempoEntreMens2)    // in each seccond we will check enter to see the condition
+            ShootTimer += Time.deltaTime;
+            if (ShootTimer >= ShootingIntervalTime)    // in each seccond we will check enter to see the condition
             {
                 transform.LookAt(player);
                 shoot();
-                myFloat2 = 0; //we will reset it because the transcurrido here will count the secconds assummed
+                ShootTimer = 0; //we will reset it because the transcurrido here will count the secconds assummed
             }
     }
 
 
     private IEnumerator FOVRoutine()
     {
-        WaitForSeconds wait = new WaitForSeconds(0.2f);
+        WaitForSeconds wait = new WaitForSeconds(0.2f); // the wait time to check from the vision system , every seccond we will do it how many times
         while (true) // infinite loop in the coroutine as long is the condition is true , we will keep doing thi routine of seeing the player permenantly
         {
             yield return wait;
@@ -318,7 +266,7 @@ public class EnemyAi : MonoBehaviour
         healthbar.fillAmount = health / starthealth;
     }
 
-    public void CreateShield()
+    public void CreateShield() // to inistiate and create the shield in the shield object inside the enemy
     {
         if (ShieldCreated==false)
         {
@@ -327,7 +275,7 @@ public class EnemyAi : MonoBehaviour
         }
     }
 
-    public void CreateExplosion()
+    public void CreateExplosion() // to inistiate and create the Explosion in the Explosion object inside the enemy
     {
         if (ExplosionCreated == false)
         {
@@ -337,7 +285,7 @@ public class EnemyAi : MonoBehaviour
     }
 
 
-    public void RandomPosibilityState() // to do the decision in transition between the states of the near area states
+    public void RandomPosibilityState() // to do the decision in transition between the states of the near area states , The System and the behavior of Random States with Percentage , inner calculations
     {
         digit = Random.Range(0, 102);
         if (digit >= minShield && digit <= maxShield)
@@ -358,13 +306,11 @@ public class EnemyAi : MonoBehaviour
     }
 
 
-    public void TimerRandomProbability() // is timer to controll the shooting time for the enemy
+    public void TimerRandomProbability() // is timer to controll the trasition time between the states in the near states sitiuations
     {
-        // if we enter the area directly we will change from idle to the new state then after that we will change every specific amoiunt of secconds
-        myFloat += Time.deltaTime;
-        if (myFloat >= tiempoEntreMens || nearState == Near_State_sitiuation.idle)    // in each seccond we will check enter to see the condition
+        NearStatesTransitionTimer += Time.deltaTime;
+        if (NearStatesTransitionTimer >= NearStatesIntervalTimer || nearState == Near_State_sitiuation.idle)
         {
-            //  nearState = (Near_State_sitiuation)Random.Range(0, 3); // change this line by putting our random state function
             RandomPosibilityState();
             counter++;
             if (nearState == Near_State_sitiuation.shield)
@@ -374,13 +320,13 @@ public class EnemyAi : MonoBehaviour
 
                 }
             }
-            myFloat = 0; //we will reset it because the transcurrido here will count the secconds assummed
+            NearStatesTransitionTimer = 0; //we will reset it because the transcurrido here will count the secconds assummed
         }
     }
 
-    public void StartEnemySystemBehaviour()
+    public void StartEnemySystemBehaviour() // to start the enemy behavior , the system will start when the animation of going up finish , inside the animation the function will be activated from there  ,we will start the behaviour , wehn the enemy animation finish when the enemy machine go up , then it will start it's behaviour
     {
-        if (playerRef != null)
+        if (playerRef != null) // we check if it's not null , to avoid errors , in case we didn't put the object , or in case we didn't set it in the start
         {
             StartEnemySystem = true;
             StartCoroutine(FOVRoutine());
@@ -392,7 +338,7 @@ public class EnemyAi : MonoBehaviour
             StartCoroutine(FOVRoutine());
         }
     }
-    public void settingThevalue() // to set the system of the % percentage , the total of all the percentage must not increase than 100% , to avoid errors in calculating 
+    public void settingThevalue() // to set the system of the % percentage , the total of all the percentage must not increase than 100% , to avoid errors in calculating , weput it in the start , because the user will set the value of the states before we start the game
     {
         minShield = 0;
         maxShield = ShieldPercentage;
@@ -401,4 +347,50 @@ public class EnemyAi : MonoBehaviour
         minTired = maxEplosion + 1;
         maxTired = minTired + TiredPercentage;
     }
+
+    public void FindingPlayer() // we put this in the Awake or the start there is no much diffrent
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+    public void SettingStatesValue() // this is in the start , to set the values of the states at the beginning , to set the variables to the default values
+    {
+        aiState = AI_Distance_State.idle;
+        nearState = Near_State_sitiuation.idle;
+    }
+
+    public void NearStatesActions()
+    {
+
+        if (canSeePlayer) // then he is in far area
+        {
+            if (dist <= Nearradius) // if near
+            {
+                ShootTimer = 0;
+                aiState = AI_Distance_State.nearDistance;
+                transform.LookAt(player);
+            }
+            else
+            {
+                aiState = AI_Distance_State.farDistance;
+                nearState = Near_State_sitiuation.idle;
+            }
+            if (aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.shield) // shield conditions are correct
+            {
+                ShieldCreated = false;
+                Destroy(instShield);
+            }
+            if (aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.explosion)
+            {
+                ExplosionCreated = false;
+                Destroy(instExplosion);
+            }
+        }
+
+        else // can see player is ==false
+        {
+            SettingStatesValue();
+        }
+
+    }
+
 }

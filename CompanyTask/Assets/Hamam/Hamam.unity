@@ -852,5 +852,21 @@ PrefabInstance:
       propertyPath: playerRef
       value: 
       objectReference: {fileID: 310572898}
+    - target: {fileID: 5184239140556945776, guid: 4edd4251460167545be662009c24b3ec, type: 3}
+      propertyPath: TheExplosion
+      value: 
+      objectReference: {fileID: 8092768379321752607, guid: a62c8ab8ce2118d4991c64e510306a35, type: 3}
+    - target: {fileID: 5184239140556945776, guid: 4edd4251460167545be662009c24b3ec, type: 3}
+      propertyPath: TiredPercentage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184239140556945776, guid: 4edd4251460167545be662009c24b3ec, type: 3}
+      propertyPath: ShieldPercentage
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184239140556945776, guid: 4edd4251460167545be662009c24b3ec, type: 3}
+      propertyPath: ExplosionPercentage
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4edd4251460167545be662009c24b3ec, type: 3}
