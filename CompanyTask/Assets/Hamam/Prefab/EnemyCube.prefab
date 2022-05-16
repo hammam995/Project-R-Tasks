@@ -568,11 +568,14 @@ MonoBehaviour:
   digit: 0
   CurrrentState: 
   minShield: 0
-  maxShield: 45
-  minExplosion: 46
+  maxShield: 10
+  minExplosion: 11
   maxEplosion: 91
   minTired: 92
   maxTired: 102
+  ShieldPercentage: 50
+  ExplosionPercentage: 30
+  TiredPercentage: 20
   BulletPivot: {fileID: 6319627602192180033}
   TheBullet: {fileID: 8098934480818727112, guid: a9984cdc0e2e2e44bb88f4447a399dbe, type: 3}
   TheMuzzleEffect: {fileID: 6543707246619394134, guid: 37c7a3c553e2207428b8799ad892bad0, type: 3}

@@ -14,7 +14,6 @@ public class HamamPlayer : HamamCharacter
         delmovemen = movementall;
         starthealth = 100;
         health = starthealth;
-
     }
 
     private void FixedUpdate()
@@ -22,16 +21,12 @@ public class HamamPlayer : HamamCharacter
         if(delmovemen!= null)
         {
             delmovemen();
-
-
         }
-
     }
 
     void Update()
     {
 
-       // movementall();
 
         
     }
@@ -45,7 +40,6 @@ public class HamamPlayer : HamamCharacter
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.gameObject.tag == "Bullet")
         {
             takedamage(other.gameObject.GetComponent<Bullet>().AmountOfDamage);
@@ -55,14 +49,9 @@ public class HamamPlayer : HamamCharacter
 
     private void OnCollisionEnter(Collision collision)
     {
-
         if (collision.gameObject.tag == "Bullet")
         {
             takedamage(collision.gameObject.GetComponent<Bullet>().AmountOfDamage);
-          //  Destroy(collision.gameObject);
         }
-
-
     }
-
 }

@@ -35,18 +35,18 @@ public class EnemyAi : MonoBehaviour
     [Header("Random Probability Near States Attributes")]
     public int digit;
     public string CurrrentState;
-    [Range(0, 102)]
-    public int minShield;
-    [Range(0, 102)]
-    public int maxShield;
-    [Range(0, 102)]
-    public int minExplosion;
-    [Range(0, 102)]
-    public int maxEplosion;
-    [Range(0, 102)]
-    public int minTired;
-    [Range(0, 102)]
-    public int maxTired;
+    [HideInInspector] public int minShield;
+    [HideInInspector] public int maxShield;
+    [HideInInspector] public int minExplosion;
+    [HideInInspector] public int maxEplosion;
+    [HideInInspector] public int minTired;
+    [HideInInspector] public int maxTired;
+    [Range(0, 100)]
+    public int ShieldPercentage;
+    [Range(0, 100)]
+    public int ExplosionPercentage;
+    [Range(0, 100)]
+    public int TiredPercentage;
 
 
 
@@ -112,6 +112,7 @@ public class EnemyAi : MonoBehaviour
     {
         aiState = AI_Distance_State.idle;
         nearState = Near_State_sitiuation.idle;
+        settingThevalue();
     }
 
     void Update()
@@ -321,9 +322,7 @@ public class EnemyAi : MonoBehaviour
     {
         if (ShieldCreated==false)
         {
-            Debug.Log("Before Shield inistiated");
             instShield = Instantiate(TheShield, transform.position, transform.rotation, ShieldPivot.transform) as GameObject;
-            Debug.Log("After Shield inistiated");
             ShieldCreated = true;
         }
     }
@@ -332,9 +331,7 @@ public class EnemyAi : MonoBehaviour
     {
         if (ExplosionCreated == false)
         {
-            Debug.Log("Before Explosion inistiated");
             instExplosion = Instantiate(TheExplosion, transform.position, transform.rotation, ExplosionPivot.transform) as GameObject;
-            Debug.Log("After Explosion inistiated");
             ExplosionCreated = true;
         }
     }
@@ -394,5 +391,14 @@ public class EnemyAi : MonoBehaviour
             StartEnemySystem = true;
             StartCoroutine(FOVRoutine());
         }
+    }
+    public void settingThevalue() // to set the system of the % percentage , the total of all the percentage must not increase than 100% , to avoid errors in calculating 
+    {
+        minShield = 0;
+        maxShield = ShieldPercentage;
+        minExplosion = maxShield + 1;
+        maxEplosion = minExplosion + ExplosionPercentage;
+        minTired = maxEplosion + 1;
+        maxTired = minTired + TiredPercentage;
     }
 }
