@@ -311,6 +311,36 @@ Transform:
   m_Father: {fileID: 5184239140556945668}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2604616234246379916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3030473930457441573}
+  m_Layer: 0
+  m_Name: StatePivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3030473930457441573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2604616234246379916}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5184239140556945668}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5184239138893586706
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,6 +474,7 @@ Transform:
   - {fileID: 1577421309888462872}
   - {fileID: 2408113604468817302}
   - {fileID: 3854265390584388005}
+  - {fileID: 3030473930457441573}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 5.508, z: 0}
@@ -562,9 +593,9 @@ MonoBehaviour:
   aiState: 2
   nearState: 3
   CurrentState: 
-  myFloat: 0
-  tiempoEntreMens: 3
+  NearStatesIntervalTimer: 5
   counter: 0
+  NearStatesTransitionTimer: 0
   digit: 0
   CurrrentState: 
   minShield: 0
@@ -573,15 +604,15 @@ MonoBehaviour:
   maxEplosion: 91
   minTired: 92
   maxTired: 102
-  ShieldPercentage: 50
-  ExplosionPercentage: 30
-  TiredPercentage: 20
+  ShieldPercentage: 30
+  ExplosionPercentage: 20
+  TiredPercentage: 50
   BulletPivot: {fileID: 6319627602192180033}
   TheBullet: {fileID: 8098934480818727112, guid: a9984cdc0e2e2e44bb88f4447a399dbe, type: 3}
   TheMuzzleEffect: {fileID: 6543707246619394134, guid: 37c7a3c553e2207428b8799ad892bad0, type: 3}
+  ShootingIntervalTime: 5
   shootspeed: 30
-  myFloat2: 0
-  tiempoEntreMens2: 2
+  ShootTimer: 0
   radius: 22.06
   Nearradius: 4.51
   angle: 207
@@ -593,16 +624,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   canSeePlayer: 0
-  Player_inside_near_radius: 0
   starthealth: 100
   health: 0
   healthbar: {fileID: 1577421308372057288}
   TheShield: {fileID: 419230059809877750, guid: 0f933251899050c4dadc659948e75471, type: 3}
-  ShieldCreated: 0
   ShieldPivot: {fileID: 2408113604468817303}
-  TheExplosion: {fileID: 6147444027748645433, guid: ddf308098b6856e48aec168d70ebb3fc, type: 3}
-  ExplosionCreated: 0
+  ShieldCreated: 0
+  TheExplosion: {fileID: 8092768379321752607, guid: a62c8ab8ce2118d4991c64e510306a35, type: 3}
   ExplosionPivot: {fileID: 174516630324105976}
+  ExplosionCreated: 0
+  TheTired: {fileID: 5367016196879307850, guid: da243a60a37b770458cd072051c61bcf, type: 3}
+  StatePivot: {fileID: 2604616234246379916}
+  TiredCreated: 0
 --- !u!1 &6319627602192180033
 GameObject:
   m_ObjectHideFlags: 0

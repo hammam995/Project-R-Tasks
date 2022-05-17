@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class HamamPlayer : HamamCharacter
 {
-
-   
     protected override void Start()
     {
         base.Start();

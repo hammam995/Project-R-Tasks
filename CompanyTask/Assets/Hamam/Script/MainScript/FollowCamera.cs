@@ -8,9 +8,6 @@ public class FollowCamera : MonoBehaviour
     [SerializeField] float sSpeed;
     [SerializeField] Vector3 dist;
     [SerializeField] Transform LoockTarget;
-
-
-
     void Start()
     {
         

@@ -4,18 +4,20 @@ using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
 using UnityEngine.UI;
+using UnityEngine.VFX;
+
 
 
 public class EnemyAi : MonoBehaviour
 {
-    public bool StartEnemySystem;
+
+    [Header("Start Enemy System")]
+    public bool StartEnemySystem; // bool condition , to make the System start , we activate it from the Animation when it's finishing
 
     [Header("Player Attributes")]
-    Transform player;
-    public float dist;
+    Transform player; // to take the refrence from the player
+    public float dist; // to messure the distance between the Enemy and the Player
     public HamamPlayer HamamScript;
-
-
 
 
     public enum AI_Distance_State { nearDistance, farDistance , idle  };
@@ -24,18 +26,19 @@ public class EnemyAi : MonoBehaviour
     [Header("States Attributes")]
     public AI_Distance_State aiState = AI_Distance_State.farDistance;
     public Near_State_sitiuation nearState;
-    public string CurrentState;
+    [HideInInspector] public string CurrentState; // (near or far state) to show the current state , we can delete the variable, is usefull for testing
 
 
     [Header("Near States Attributes")]
-    [HideInInspector] public float NearStatesTransitionTimer; // it will change by the system ,  myfloat 
     public int NearStatesIntervalTimer = 5; // The user can change it as much he want ,  tiempoEntreMens
-    public int counter = 0; // is counter just to check if we are moving between the states and to check when we do the transition , the sitituation of the objects we created , (shield, Explosion)
-   
+    [HideInInspector] public int counter = 0; // (is usefull for testing , we can delete it) is counter just to check if we are moving between the states and to check when we do the transition , the sitituation of the objects we created , (shield, Explosion)
+    [HideInInspector] public float NearStatesTransitionTimer; // it will change by the system ,  myfloat 
+
+
 
     [Header("Random Probability Near States Attributes")]
-    public int digit;
-    public string CurrrentState;
+    public int digit; // to show the current Random number, depends on that we choose the near state sitiuation, because is connected to the percentage system
+    [HideInInspector] public string CurrrentState; // is usefull to check from which state of the near state we are in
     [HideInInspector] public int minShield;
     [HideInInspector] public int maxShield;
     [HideInInspector] public int minExplosion;
@@ -43,14 +46,11 @@ public class EnemyAi : MonoBehaviour
     [HideInInspector] public int minTired;
     [HideInInspector] public int maxTired;
     [Range(0, 100)]
-    public int ShieldPercentage;
+    public int ShieldPercentage; // to put the percentage of the Shield state
     [Range(0, 100)]
-    public int ExplosionPercentage;
+    public int ExplosionPercentage; // to put the percentage of the Explosion state
     [Range(0, 100)]
-    public int TiredPercentage;
-
-
-
+    public int TiredPercentage; // to put the percentage of the Tired state
 
 
     [Header("Bullet Attributes")]
@@ -59,14 +59,11 @@ public class EnemyAi : MonoBehaviour
     public GameObject TheMuzzleEffect;
     GameObject instBullet;
     GameObject instmuzzle;
-    public float shootspeed; // to control the bullet speed
 
     [Header("Shooting Attributes")]
-    [HideInInspector] public float ShootTimer; // it will change by the system ,  myfloat2 
     public int ShootingIntervalTime = 5; // The user can change it as much he want ,  tiempoEntreMens2
-
-
-
+    public float shootspeed; // to control the bullet speed
+    [HideInInspector] public float ShootTimer; // it will change by the system ,  myfloat2 
 
 
     [Header("Field Of View Attributes")]
@@ -97,6 +94,15 @@ public class EnemyAi : MonoBehaviour
            GameObject instExplosion;
     public GameObject ExplosionPivot;
     [HideInInspector] public bool ExplosionCreated;
+
+    [Header(" Tired State Attributes")] // is to show the state VFX
+    public GameObject TheTired;
+    GameObject instTired;
+    public GameObject StatePivot;
+    [HideInInspector] public bool TiredCreated;
+
+
+
 
     private void Awake()
     {
@@ -140,6 +146,7 @@ public class EnemyAi : MonoBehaviour
                             break;
                         case Near_State_sitiuation.tired:
                             ShootTimer = 0;
+                            CreateTired();
                             break;
                         default:
                             break;
@@ -157,41 +164,11 @@ public class EnemyAi : MonoBehaviour
             // new switch case depend on the field of the view           
         }
     }
-        
 
     public void Distance() // Extra function
     {
         dist = Vector3.Distance(player.position, transform.position);
     }
-    
-    public void Timer() // is timer to controll the near states sitiuations and their actions
-    {
-        // if we enter the area directly we will change from idle to the new state then after that we will change every specific amoiunt of secconds
-        NearStatesTransitionTimer += Time.deltaTime;
-        if (NearStatesTransitionTimer >= NearStatesIntervalTimer || nearState == Near_State_sitiuation.idle) 
-        {
-                nearState = (Near_State_sitiuation)Random.Range(0, 3);
-            counter++;
-            if(nearState== Near_State_sitiuation.shield)
-            {
-                if (ShieldCreated == true)
-                {
-
-                }
-            }
-
-            if (nearState == Near_State_sitiuation.explosion)
-            {
-                if (ShieldCreated == true)
-                {
-
-                }
-            }
-            NearStatesTransitionTimer = 0; //we will reset it because the transcurrido here will count the secconds assummed
-        }
-    }
-
-
     public void shoot() // shooting behavior , creating the bullet and it's attributes
     {
         instBullet = Instantiate(TheBullet, BulletPivot.transform.position, BulletPivot.transform.rotation, BulletPivot.transform) as GameObject;
@@ -210,7 +187,6 @@ public class EnemyAi : MonoBehaviour
         Destroy(instBullet, 3);
     }
 
-
     public void Timer2() // is timer to controll the shooting time for the enemy , more or les is the fire rate
     {
             ShootTimer += Time.deltaTime;
@@ -222,7 +198,6 @@ public class EnemyAi : MonoBehaviour
             }
     }
 
-
     private IEnumerator FOVRoutine()
     {
         WaitForSeconds wait = new WaitForSeconds(0.2f); // the wait time to check from the vision system , every seccond we will do it how many times
@@ -232,7 +207,6 @@ public class EnemyAi : MonoBehaviour
             FieldOfViewCheck();
         }
     }
-
 
     private void FieldOfViewCheck() // is to check if we can see the player , from here we take the distance values
     {
@@ -284,6 +258,14 @@ public class EnemyAi : MonoBehaviour
         }
     }
 
+    public void CreateTired()
+    {
+        if (TiredCreated == false)
+        {
+            instTired = Instantiate(TheTired, transform.position, transform.rotation, StatePivot.transform) as GameObject;
+            TiredCreated = true;
+        }
+    }
 
     public void RandomPosibilityState() // to do the decision in transition between the states of the near area states , The System and the behavior of Random States with Percentage , inner calculations
     {
@@ -304,7 +286,6 @@ public class EnemyAi : MonoBehaviour
             CurrrentState = "3 is tired";
         }
     }
-
 
     public void TimerRandomProbability() // is timer to controll the trasition time between the states in the near states sitiuations
     {
@@ -384,13 +365,48 @@ public class EnemyAi : MonoBehaviour
                 ExplosionCreated = false;
                 Destroy(instExplosion);
             }
+            if (aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.tired)
+            {
+                TiredCreated = false;
+                Destroy(instTired);
+            }
         }
 
         else // can see player is ==false
         {
             SettingStatesValue();
         }
-
     }
+    public void Timer() // (Extra Function) is timer to controll the near states sitiuations and their actions
+    {
+        // if we enter the area directly we will change from idle to the new state then after that we will change every specific amoiunt of secconds
+        NearStatesTransitionTimer += Time.deltaTime;
+        if (NearStatesTransitionTimer >= NearStatesIntervalTimer || nearState == Near_State_sitiuation.idle)
+        {
+            nearState = (Near_State_sitiuation)Random.Range(0, 3);
+            counter++;
+            if (nearState == Near_State_sitiuation.shield)
+            {
+                if (ShieldCreated == true)
+                {
 
+                }
+            }
+            if (nearState == Near_State_sitiuation.explosion)
+            {
+                if (ShieldCreated == true)
+                {
+
+                }
+            }
+            if (nearState == Near_State_sitiuation.tired)
+            {
+                if (ShieldCreated == true)
+                {
+
+                }
+            }
+            NearStatesTransitionTimer = 0; //we will reset it because the transcurrido here will count the secconds assummed
+        }
+    }
 }
