@@ -304,7 +304,7 @@ GameObject:
   - component: {fileID: 4364861999203606392}
   - component: {fileID: 1984475393032754013}
   m_Layer: 0
-  m_Name: vfx_GroundSlash_v1_purple
+  m_Name: Modifiedvfx_GroundSlash_v1_purple 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -406,7 +406,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4364862000155842778}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 112a3d6be218a82449d0bcc41a18a7e8, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: 3694243674247ac49a0b4ace4d8003b6, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0

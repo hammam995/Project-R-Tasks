@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &430389702
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 430389703}
+  m_Layer: 6
+  m_Name: SlashPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &430389703
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430389702}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.3, y: -1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6217788253007684193}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1302930433
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,6 +126,7 @@ Transform:
   - {fileID: 1472669333}
   - {fileID: 1302930434}
   - {fileID: 866160603365757214}
+  - {fileID: 430389703}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -195,6 +226,9 @@ MonoBehaviour:
   starthealth: 100
   health: 0
   healthbar: {fileID: 866160602754624974}
+  projectile: {fileID: 4364861999203606394, guid: e2abb0b7a4a54b941a19019e640d61a7, type: 3}
+  firePoint: {fileID: 430389703}
+  fireRate: 4
 --- !u!1 &6217788254647876215
 GameObject:
   m_ObjectHideFlags: 0
