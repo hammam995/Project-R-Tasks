@@ -920,7 +920,7 @@ PrefabInstance:
     - target: {fileID: 2108388196, guid: de557c5d3afc613488f02dc7253093c6, type: 3}
       propertyPath: projectile
       value: 
-      objectReference: {fileID: 4364861999203606394, guid: 46d2156800973de47ab4e709fdbc2c5f, type: 3}
+      objectReference: {fileID: 4364861999203606394, guid: 11086311de078264e946671077b6ff76, type: 3}
     - target: {fileID: 6217788253007684193, guid: de557c5d3afc613488f02dc7253093c6, type: 3}
       propertyPath: m_RootOrder
       value: 7
