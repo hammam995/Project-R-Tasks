@@ -35,7 +35,7 @@ public class HamamPlayer : HamamCharacter
 
     void Update()
     {
-        if (Input.GetButton("Fire1") && Time.time >= timeToFire)
+        if (Input.GetKey(KeyCode.X) && Time.time >= timeToFire)
         {
             timeToFire = Time.time + 1 / fireRate;
             ShootProjectile();

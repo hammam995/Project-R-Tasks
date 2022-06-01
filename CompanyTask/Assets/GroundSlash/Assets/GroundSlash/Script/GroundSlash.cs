@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class GroundSlash : MonoBehaviour
 {
-    public float speed = 30;
-    public float slowDownRate = 0.01f;
-    public float detectingDistance = 0.1f;
-    public float destroyDelay = 5;
+    public float speed = 30; // to controll hoe fast it's and the Distance , because we are controlling it from the RigidBody
+    public float slowDownRate = 0.01f;  // it's prefered to be it's range between [0.01 -1]
+    public float destroyDelay = 5; // the time to destroy the slash
 
     private Rigidbody rb;
-    private bool stopped;
 
     void Start()
     {
@@ -26,25 +24,6 @@ public class GroundSlash : MonoBehaviour
 
         Destroy(gameObject, destroyDelay);
     }
-
-    private void FixedUpdate()
-    {
-        if (!stopped)
-        {
-            RaycastHit hit;
-            Vector3 distance = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-            if (Physics.Raycast(distance, transform.TransformDirection(-Vector3.up), out hit, detectingDistance))
-            {
-                transform.position = new Vector3(transform.position.x, hit.point.y, transform.position.z);
-            }
-            else
-            {
-                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-            }
-            Debug.DrawRay(distance, transform.TransformDirection(-Vector3.up * detectingDistance), Color.red);
-        }
-    }
-
     IEnumerator SlowDown ()
     {
         float t = 1;
@@ -54,7 +33,5 @@ public class GroundSlash : MonoBehaviour
             t -= slowDownRate;
             yield return new WaitForSeconds(0.1f);
         }
-
-        stopped = true;
     }
 }
