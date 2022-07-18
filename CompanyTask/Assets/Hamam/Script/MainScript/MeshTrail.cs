@@ -4,23 +4,20 @@ using UnityEngine;
 
 public class MeshTrail : MonoBehaviour
 {
-    public float ActiveTime = 2f;
+    public float ActiveTime = 2f; // the duration of the dash Trail ,when we click on the button
 
     [Header("Mesh Related")]
-    public float meshRefreshRate = 0.1f;
-    public float meshDestroyDelay = 3f;
-    public Transform PositionTospawn;
+    public float meshRefreshRate = 0.1f; // the waiting time between every action , wehn we hold the button , so no lag or overloading happens
+    public float meshDestroyDelay = 3f; // the time to destroy and remove the Effect from the Scene
+    public Transform PositionTospawn; // to make the effect follow the character or the player
 
 
     private bool isTrailActive;
 
-    private SkinnedMeshRenderer[] skinnedMeshRenderers;
+    private SkinnedMeshRenderer[] skinnedMeshRenderers; // the array is to take the componnents from the character children , like the skinned Mesh in every child of the parent
 
     [Header("Shader Related")]
     public Material mat;
-
-
-
 
     void Start()
     {
@@ -29,20 +26,11 @@ public class MeshTrail : MonoBehaviour
 
     void Update()
     {
-        
         if(Input.GetKeyDown(KeyCode.RightShift)&& !isTrailActive)
         {
             isTrailActive = true;
             StartCoroutine(ActiveTrail(ActiveTime));
-
-
         }
-
-
-
-
-
-
     }
 
     IEnumerator ActiveTrail ( float timeActive)
