@@ -27955,7 +27955,7 @@ MonoBehaviour:
   meshRefreshRate: 0.1
   meshDestroyDelay: 3
   PositionTospawn: {fileID: 1980746747}
-  mat: {fileID: 5414641497151131908, guid: 0717af219c0f934408662997607ec553, type: 3}
+  mat: {fileID: 2100000, guid: dbb7a907b5e66e845aa88898c60f0996, type: 2}
 --- !u!1 &8595120052619100460
 GameObject:
   m_ObjectHideFlags: 0
