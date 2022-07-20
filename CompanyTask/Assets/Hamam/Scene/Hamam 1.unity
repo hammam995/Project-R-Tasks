@@ -24947,7 +24947,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CameraTargret: {fileID: 476756728}
   sSpeed: 5
-  dist: {x: 0, y: 2.8, z: 0}
+  dist: {x: 0, y: 2.8, z: 3}
   LoockTarget: {fileID: 165333003}
 --- !u!114 &250979498137255962
 MonoBehaviour:
@@ -27882,6 +27882,7 @@ GameObject:
   - component: {fileID: 8525067125903366783}
   - component: {fileID: 8525067125903366782}
   - component: {fileID: 8525067125903366785}
+  - component: {fileID: 8525067125903366786}
   m_Layer: 6
   m_Name: aj
   m_TagString: Player
@@ -27956,6 +27957,25 @@ MonoBehaviour:
   meshDestroyDelay: 3
   PositionTospawn: {fileID: 1980746747}
   mat: {fileID: 2100000, guid: dbb7a907b5e66e845aa88898c60f0996, type: 2}
+--- !u!95 &8525067125903366786
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8525067125903366781}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 0717af219c0f934408662997607ec553, type: 3}
+  m_Controller: {fileID: 9100000, guid: abdd72fbc8e1c7349a4be60fb9a1255f, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8595120052619100460
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,15 +15,36 @@ public class HamamPlayer : HamamCharacter
     private float timeToFire;
     private GroundSlash groundSlashScript;
 
+    private Animator anim;
 
 
     protected override void Start()
     {
         base.Start();
         delmovemen = movementall;
+        delmovemen += isWalking;
+        delmovemen += isRunning;
         starthealth = 100;
         health = starthealth;
+
+        anim = GetComponent<Animator>();
+
     }
+
+    public void isWalking() // the condition to activate the animation for walking and turnningaround by using everyoune it is input axis
+    {
+        anim.SetFloat("Walk", Input.GetAxis("Vertical"));
+    }
+
+    public void isRunning() // the condition activate the running animation
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetAxis("Vertical") != 0 || Input.GetKey(KeyCode.RightShift) && Input.GetAxis("Vertical") != 0)
+        {
+            anim.SetFloat("Walk", 2 * Input.GetAxis("Vertical"));
+        }
+    }
+
+
 
     private void FixedUpdate()
     {

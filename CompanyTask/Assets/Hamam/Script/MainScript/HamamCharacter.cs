@@ -18,8 +18,14 @@ public class HamamCharacter : MonoBehaviour
     public float health; // current health
     public Image healthbar; //for healthbar
 
+
+
+
+
+
     protected virtual void Start()
     {
+
         
     }
 

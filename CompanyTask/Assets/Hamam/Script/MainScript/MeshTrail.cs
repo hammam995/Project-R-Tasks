@@ -26,7 +26,7 @@ public class MeshTrail : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.RightShift)&& !isTrailActive)
+        if(Input.GetKeyDown(KeyCode.LeftShift)&& !isTrailActive)
         {
             isTrailActive = true;
             StartCoroutine(ActiveTrail(ActiveTime));
