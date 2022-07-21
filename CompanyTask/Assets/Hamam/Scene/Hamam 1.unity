@@ -27953,10 +27953,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActiveTime: 2
-  meshRefreshRate: 0.1
+  meshRefreshRate: 0.05
   meshDestroyDelay: 3
   PositionTospawn: {fileID: 1980746747}
   mat: {fileID: 2100000, guid: dbb7a907b5e66e845aa88898c60f0996, type: 2}
+  shaderVarRef: _Alpha
+  shaderVarRate: 0.05
+  shaderVarRefreshRater: 0.1
 --- !u!95 &8525067125903366786
 Animator:
   serializedVersion: 3

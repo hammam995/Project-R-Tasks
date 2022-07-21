@@ -40,6 +40,7 @@ Material:
     - Vector1_44270376e11048c592ed64fca717225d: 1.25
     - Vector1_a24f10ec03a145c0bf79c753ed32eab6: 1
     - _AddPrecomputedVelocity: 0
+    - _Alpha: 1
     - _AlphaCutoffEnable: 1
     - _AlphaDstBlend: 10
     - _AlphaSrcBlend: 1
