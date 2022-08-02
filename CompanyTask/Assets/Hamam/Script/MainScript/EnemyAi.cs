@@ -21,7 +21,7 @@ public class EnemyAi : MonoBehaviour
 
 
     public enum AI_Distance_State { nearDistance, farDistance , idle  };
-    public enum Near_State_sitiuation { shield, tired , explosion , idle };
+    public enum Near_State_sitiuation { shield, tired , explosion , idle , Circular };
 
     [Header("States Attributes")]
     public AI_Distance_State aiState = AI_Distance_State.farDistance;
@@ -101,6 +101,26 @@ public class EnemyAi : MonoBehaviour
     public GameObject StatePivot;
     [HideInInspector] public bool TiredCreated;
 
+    [Header(" 360 State Attributes")] // is to show the state VFX
+    [HideInInspector] public int min360;
+    [HideInInspector] public int max360;
+    [Range(0, 100)]
+    public int CircularPercentage; // to put the percentage of the Shield state
+    [HideInInspector] public bool CircularCreated;
+    [SerializeField] public Vector3 _rotation = Vector3.up;
+    public float _speed;
+    //public bool Look;
+
+    [Header(" Laser_Beam Attributes")] // is to show the state VFX
+    public GameObject laserPrefab;
+    public GameObject firePoint;
+    public float maximumLength;
+    private LineRenderer lr;
+    private GameObject spawnedLaser;
+
+
+    //23.973
+
 
 
 
@@ -113,6 +133,11 @@ public class EnemyAi : MonoBehaviour
     {
         SettingStatesValue();
         settingThevalue();
+
+        spawnedLaser = Instantiate(laserPrefab, firePoint.transform ) as GameObject;
+        lr = spawnedLaser.transform.GetChild(0).GetComponent<LineRenderer>();
+        DisableLaser();
+
     }
 
     void Update()
@@ -138,15 +163,28 @@ public class EnemyAi : MonoBehaviour
                         case Near_State_sitiuation.shield:
                             ShootTimer = 0;
                             CreateShield();
+                            transform.LookAt(player);
 
                             break;
                         case Near_State_sitiuation.explosion:
                             ShootTimer = 0;
                             CreateExplosion();
+                            transform.LookAt(player);
+
                             break;
                         case Near_State_sitiuation.tired:
                             ShootTimer = 0;
                             CreateTired();
+                            transform.LookAt(player);
+
+
+                            break;
+
+                        case Near_State_sitiuation.Circular:
+                            ShootTimer = 0;
+                            Create360();
+                            EnableLaser();
+
                             break;
                         default:
                             break;
@@ -267,6 +305,14 @@ public class EnemyAi : MonoBehaviour
         }
     }
 
+    public void Create360()
+    {
+
+        transform.Rotate(_rotation * _speed * Time.deltaTime);
+
+    }
+
+
     public void RandomPosibilityState() // to do the decision in transition between the states of the near area states , The System and the behavior of Random States with Percentage , inner calculations
     {
         digit = Random.Range(0, 102);
@@ -284,6 +330,12 @@ public class EnemyAi : MonoBehaviour
         {
             nearState = Near_State_sitiuation.tired;
             CurrrentState = "3 is tired";
+        }
+
+        if (digit >= min360 && digit <= max360)
+        {
+            nearState = Near_State_sitiuation.Circular;
+            CurrrentState = "4 is 360";
         }
     }
 
@@ -327,6 +379,9 @@ public class EnemyAi : MonoBehaviour
         maxEplosion = minExplosion + ExplosionPercentage;
         minTired = maxEplosion + 1;
         maxTired = minTired + TiredPercentage;
+
+        min360 = maxTired + 1;
+        max360 = min360 + CircularPercentage;
     }
 
     public void FindingPlayer() // we put this in the Awake or the start there is no much diffrent
@@ -348,7 +403,7 @@ public class EnemyAi : MonoBehaviour
             {
                 ShootTimer = 0;
                 aiState = AI_Distance_State.nearDistance;
-                transform.LookAt(player);
+                //transform.LookAt(player);
             }
             else
             {
@@ -370,6 +425,16 @@ public class EnemyAi : MonoBehaviour
                 TiredCreated = false;
                 Destroy(instTired);
             }
+
+            if (aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.Circular)
+            {
+                CircularCreated = false;
+                DisableLaser();
+               // Destroy(instTired);
+            }
+
+
+
         }
 
         else // can see player is ==false
@@ -408,5 +473,21 @@ public class EnemyAi : MonoBehaviour
             }
             NearStatesTransitionTimer = 0; //we will reset it because the transcurrido here will count the secconds assummed
         }
+    }
+
+
+
+    public void EnableLaser()
+    {
+        spawnedLaser.SetActive(true);
+    }
+    public void DisableLaser()
+    {
+        spawnedLaser.SetActive(false);
+    }
+
+    public void Laser_L()
+    {
+        lr.SetPosition(1, new Vector3(0, 0, maximumLength));
     }
 }
