@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2077129810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2077129811}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 804a6b341b5deb2469f43621937e2922, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2077129811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077129810}
+  m_LocalRotation: {x: 0.20768125, y: 0, z: 0, w: 0.97819656}
+  m_LocalPosition: {x: -0, y: 0, z: 0.428}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5184239138893586707}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 23.973, y: 0, z: 0}
 --- !u!1 &174516630324105976
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,7 +400,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.111, y: 0.276, z: 0.7}
   m_LocalScale: {x: 0.1796374, y: 0.18236509, z: 0.7626379}
-  m_Children: []
+  m_Children:
+  - {fileID: 2077129811}
   m_Father: {fileID: 5184239140556945668}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -604,9 +635,9 @@ MonoBehaviour:
   maxEplosion: 91
   minTired: 92
   maxTired: 102
-  ShieldPercentage: 30
+  ShieldPercentage: 20
   ExplosionPercentage: 20
-  TiredPercentage: 50
+  TiredPercentage: 10
   BulletPivot: {fileID: 6319627602192180033}
   TheBullet: {fileID: 8098934480818727112, guid: a9984cdc0e2e2e44bb88f4447a399dbe, type: 3}
   TheMuzzleEffect: {fileID: 6543707246619394134, guid: 37c7a3c553e2207428b8799ad892bad0, type: 3}
@@ -615,7 +646,7 @@ MonoBehaviour:
   ShootTimer: 0
   radius: 22.06
   Nearradius: 4.51
-  angle: 207
+  angle: 360
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
@@ -636,6 +667,15 @@ MonoBehaviour:
   TheTired: {fileID: 5367016196879307850, guid: da243a60a37b770458cd072051c61bcf, type: 3}
   StatePivot: {fileID: 2604616234246379916}
   TiredCreated: 0
+  min360: 0
+  max360: 0
+  CircularPercentage: 50
+  CircularCreated: 0
+  _rotation: {x: 0, y: 1, z: 0}
+  _speed: 75
+  laserPrefab: {fileID: 7964727266491681533, guid: eef143bebde225843b98f7d11c7d25a0, type: 3}
+  firePoint: {fileID: 2077129810}
+  maximumLength: 25
 --- !u!1 &6319627602192180033
 GameObject:
   m_ObjectHideFlags: 0

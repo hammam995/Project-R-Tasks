@@ -6,11 +6,8 @@ using Random = UnityEngine.Random;
 using UnityEngine.UI;
 using UnityEngine.VFX;
 
-
-
-public class EnemyAi : MonoBehaviour
+public class EnemyAi2 : MonoBehaviour
 {
-
     [Header("Start Enemy System")]
     public bool StartEnemySystem; // bool condition , to make the System start , we activate it from the Animation when it's finishing
 
@@ -20,8 +17,8 @@ public class EnemyAi : MonoBehaviour
     public HamamPlayer HamamScript;
 
 
-    public enum AI_Distance_State { nearDistance, farDistance , idle  };
-    public enum Near_State_sitiuation { shield, tired , explosion , idle , Circular };
+    public enum AI_Distance_State { nearDistance, farDistance, idle };
+    public enum Near_State_sitiuation { shield, tired, explosion, idle, Circular , Circular2 };
 
     [Header("States Attributes")]
     public AI_Distance_State aiState = AI_Distance_State.farDistance;
@@ -63,7 +60,15 @@ public class EnemyAi : MonoBehaviour
     [Header("Shooting Attributes")]
     public int ShootingIntervalTime = 5; // The user can change it as much he want ,  tiempoEntreMens2
     public float shootspeed; // to control the bullet speed
-    [HideInInspector] public float ShootTimer; // it will change by the system ,  myfloat2 
+    public float ShootTimer; // it will change by the system ,  myfloat2 
+
+    [Header("(2) Shooting Attributes")]
+    public int ShootingIntervalTime_2 = 3;
+    public float ShootTimer_2; // it will change by the system ,  myfloat2 
+    public bool Timer_2;
+
+
+
 
 
     [Header("Field Of View Attributes")]
@@ -84,14 +89,14 @@ public class EnemyAi : MonoBehaviour
 
     [Header("Shield Attributes")]
     public GameObject TheShield;
-           GameObject instShield;
+    GameObject instShield;
     public GameObject ShieldPivot;
     [HideInInspector] public bool ShieldCreated;
 
 
     [Header("Explosion Attributes")]
     public GameObject TheExplosion;
-           GameObject instExplosion;
+    GameObject instExplosion;
     public GameObject ExplosionPivot;
     [HideInInspector] public bool ExplosionCreated;
 
@@ -106,7 +111,7 @@ public class EnemyAi : MonoBehaviour
     public int CircularPercentage; // to put the percentage of the Shield state
     public float _speed;
     [HideInInspector] public int min360;
-    [HideInInspector] public int max360;
+    [HideInInspector] public int max360;  
     [HideInInspector] public bool CircularCreated;
     [SerializeField] public Vector3 _rotation = Vector3.up;
     //public bool Look;
@@ -119,24 +124,54 @@ public class EnemyAi : MonoBehaviour
     private GameObject spawnedLaser;
 
 
-    //23.973
+    [Header(" (2) 360 State Attributes")] // is to show the state VFX
+    [Range(0, 100)]
+    public int CircularPercentage_2; // to put the percentage of the Shield state
+    public float _speed_2;
+    [HideInInspector] public bool CircularCreated_2;
+    [HideInInspector] public int min360_2;
+    [HideInInspector] public int max360_2;
+    [SerializeField] public Vector3 _rotation_2 = Vector3.up;
+
+
+    [Header("(2) Laser_Beam Attributes")] // is to show the state VFX
+    public float maximumLength_2;
+    [Range(1f,2f)]
+    public float Extent;
+    private LineRenderer lr_2;
+    private GameObject spawnedLaser_2;
+    
+    // we will use laser prefap
+    // rather than fire poinr , use the Bullet Pivot
+
+
 
 
 
 
     private void Awake()
     {
-        FindingPlayer();
+        FindingPlayer(); // checked
     }
 
     void Start()
     {
-        SettingStatesValue();
-        settingThevalue();
-
-        spawnedLaser = Instantiate(laserPrefab, firePoint.transform ) as GameObject;
+        SettingStatesValue(); // checked
+        settingThevalue(); // checked
+        //
+        spawnedLaser = Instantiate(laserPrefab, firePoint.transform) as GameObject;
         lr = spawnedLaser.transform.GetChild(0).GetComponent<LineRenderer>();
         DisableLaser();
+        //
+
+        spawnedLaser_2 = Instantiate(laserPrefab, BulletPivot.transform) as GameObject;
+        lr_2 = spawnedLaser_2.transform.GetChild(0).GetComponent<LineRenderer>();
+        DisableLaser_2();
+
+
+
+
+
 
     }
 
@@ -207,33 +242,37 @@ public class EnemyAi : MonoBehaviour
     {
         dist = Vector3.Distance(player.position, transform.position);
     }
-    public void shoot() // shooting behavior , creating the bullet and it's attributes
-    {
-        instBullet = Instantiate(TheBullet, BulletPivot.transform.position, BulletPivot.transform.rotation, BulletPivot.transform) as GameObject;
-        if (instBullet.GetComponent<Rigidbody>() == null)
-        {
-            instBullet.AddComponent<Rigidbody>();
-            instBullet.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
-        }
-        instBullet.transform.position = BulletPivot.transform.position;
-
-        instBullet.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * shootspeed, ForceMode.Impulse);
-        instBullet.transform.SetParent(null);
-
-        instmuzzle = Instantiate(TheMuzzleEffect, BulletPivot.transform.position, BulletPivot.transform.rotation, BulletPivot.transform) as GameObject;
-        Destroy(instmuzzle, 2);
-        Destroy(instBullet, 3);
-    }
+    
 
     public void Timer2() // is timer to controll the shooting time for the enemy , more or les is the fire rate
     {
+        if (Timer_2 == false)
+        {
             ShootTimer += Time.deltaTime;
+            transform.LookAt(player);
+            EnableLaser_2();
             if (ShootTimer >= ShootingIntervalTime)    // in each seccond we will check enter to see the condition
             {
-                transform.LookAt(player);
-                shoot();
-                ShootTimer = 0; //we will reset it because the transcurrido here will count the secconds assummed
+                DisableLaser_2();
+                ShootTimer_2 += Time.deltaTime;
+                if (ShootTimer_2 >= ShootingIntervalTime_2)
+                {
+                   // EnableLaser_2();
+                   // ShootTimer = 0;
+                    Timer_2 = true;
+                }
             }
+        }
+        else
+        {
+            if (Timer_2 == true)
+            {
+                ShootTimer = 0;
+                ShootTimer_2 = 0;
+                Timer_2 = false;
+            }
+        }
+        
     }
 
     private IEnumerator FOVRoutine()
@@ -280,7 +319,7 @@ public class EnemyAi : MonoBehaviour
 
     public void CreateShield() // to inistiate and create the shield in the shield object inside the enemy
     {
-        if (ShieldCreated==false)
+        if (ShieldCreated == false)
         {
             instShield = Instantiate(TheShield, transform.position, transform.rotation, ShieldPivot.transform) as GameObject;
             ShieldCreated = true;
@@ -373,6 +412,13 @@ public class EnemyAi : MonoBehaviour
     }
     public void settingThevalue() // to set the system of the % percentage , the total of all the percentage must not increase than 100% , to avoid errors in calculating , weput it in the start , because the user will set the value of the states before we start the game
     {
+        min360 = 0;
+        max360 = CircularPercentage;
+        min360_2 = max360 + 1;
+        max360_2 = min360_2 + CircularPercentage_2;
+
+
+        /*
         minShield = 0;
         maxShield = ShieldPercentage;
         minExplosion = maxShield + 1;
@@ -382,6 +428,7 @@ public class EnemyAi : MonoBehaviour
 
         min360 = maxTired + 1;
         max360 = min360 + CircularPercentage;
+        */
     }
 
     public void FindingPlayer() // we put this in the Awake or the start there is no much diffrent
@@ -430,7 +477,7 @@ public class EnemyAi : MonoBehaviour
             {
                 CircularCreated = false;
                 DisableLaser();
-               // Destroy(instTired);
+                // Destroy(instTired);
             }
 
 
@@ -489,5 +536,21 @@ public class EnemyAi : MonoBehaviour
     public void Laser_L()
     {
         lr.SetPosition(1, new Vector3(0, 0, maximumLength));
+    }
+
+    ////////////////////////
+    ///
+    public void EnableLaser_2()
+    {
+        Laser_L_2();
+        spawnedLaser_2.SetActive(true);
+    }
+    public void DisableLaser_2()
+    {
+        spawnedLaser_2.SetActive(false);
+    }
+    public void Laser_L_2()
+    {
+        lr_2.SetPosition(1, new Vector3(0, 0, dist * 1.5f));
     }
 }
