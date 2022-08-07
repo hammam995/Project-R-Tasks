@@ -18,7 +18,7 @@ public class EnemyAi2 : MonoBehaviour
 
 
     public enum AI_Distance_State { nearDistance, farDistance, idle };
-    public enum Near_State_sitiuation { shield, tired, explosion, idle, Circular , Circular2 };
+    public enum Near_State_sitiuation { idle, Circular , Circular2 };
 
     [Header("States Attributes")]
     public AI_Distance_State aiState = AI_Distance_State.farDistance;
@@ -192,25 +192,6 @@ public class EnemyAi2 : MonoBehaviour
                     CurrentState = "near Distance";
                     switch (nearState)
                     {
-                        case Near_State_sitiuation.shield:
-                            ShootTimer = 0;
-                            CreateShield();
-                            transform.LookAt(player);
-
-                            break;
-                        case Near_State_sitiuation.explosion:
-                            ShootTimer = 0;
-                            CreateExplosion();
-                            transform.LookAt(player);
-
-                            break;
-                        case Near_State_sitiuation.tired:
-                            ShootTimer = 0;
-                            CreateTired();
-                            transform.LookAt(player);
-
-
-                            break;
 
                         case Near_State_sitiuation.Circular:
                             ShootTimer = 0;
@@ -218,6 +199,13 @@ public class EnemyAi2 : MonoBehaviour
                             EnableLaser();
 
                             break;
+
+                        case Near_State_sitiuation.Circular2:
+
+
+
+                            break;
+
                         default:
                             break;
                     }
@@ -352,26 +340,17 @@ public class EnemyAi2 : MonoBehaviour
     public void RandomPosibilityState() // to do the decision in transition between the states of the near area states , The System and the behavior of Random States with Percentage , inner calculations
     {
         digit = Random.Range(0, 102);
-        if (digit >= minShield && digit <= maxShield)
-        {
-            nearState = Near_State_sitiuation.shield;
-            CurrrentState = "1 is shield";
-        }
-        if (digit >= minExplosion && digit <= maxEplosion)
-        {
-            nearState = Near_State_sitiuation.explosion;
-            CurrrentState = "2 is EXP";
-        }
-        if (digit >= minTired && digit <= maxTired)
-        {
-            nearState = Near_State_sitiuation.tired;
-            CurrrentState = "3 is tired";
-        }
 
         if (digit >= min360 && digit <= max360)
         {
             nearState = Near_State_sitiuation.Circular;
             CurrrentState = "4 is 360";
+        }
+
+        if (digit >= min360_2 && digit <= max360_2)
+        {
+            nearState = Near_State_sitiuation.Circular2;
+            CurrrentState = "Cicular2";
         }
     }
 
@@ -382,13 +361,6 @@ public class EnemyAi2 : MonoBehaviour
         {
             RandomPosibilityState();
             counter++;
-            if (nearState == Near_State_sitiuation.shield)
-            {
-                if (ShieldCreated == true)
-                {
-
-                }
-            }
             NearStatesTransitionTimer = 0; //we will reset it because the transcurrido here will count the secconds assummed
         }
     }
@@ -413,17 +385,6 @@ public class EnemyAi2 : MonoBehaviour
         max360 = CircularPercentage;
         min360_2 = max360 + 1;
         max360_2 = min360_2 + CircularPercentage_2;
-        /*
-        minShield = 0;
-        maxShield = ShieldPercentage;
-        minExplosion = maxShield + 1;
-        maxEplosion = minExplosion + ExplosionPercentage;
-        minTired = maxEplosion + 1;
-        maxTired = minTired + TiredPercentage;
-
-        min360 = maxTired + 1;
-        max360 = min360 + CircularPercentage;
-        */
     }
 
     public void FindingPlayer() // we put this in the Awake or the start there is no much diffrent
@@ -453,22 +414,7 @@ public class EnemyAi2 : MonoBehaviour
                 aiState = AI_Distance_State.farDistance;
                 nearState = Near_State_sitiuation.idle;
             }
-            if (aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.shield) // shield conditions are correct
-            {
-                ShieldCreated = false;
-                Destroy(instShield);
-            }
-            if (aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.explosion)
-            {
-                ExplosionCreated = false;
-                Destroy(instExplosion);
-            }
-            if (aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.tired)
-            {
-                TiredCreated = false;
-                Destroy(instTired);
-            }
-
+            
             if (aiState != AI_Distance_State.nearDistance || nearState != Near_State_sitiuation.Circular)
             {
                 CircularCreated = false;
@@ -489,41 +435,7 @@ public class EnemyAi2 : MonoBehaviour
             SettingStatesValue();
         }
     }
-    public void Timer() // (Extra Function) is timer to controll the near states sitiuations and their actions
-    {
-        // if we enter the area directly we will change from idle to the new state then after that we will change every specific amoiunt of secconds
-        NearStatesTransitionTimer += Time.deltaTime;
-        if (NearStatesTransitionTimer >= NearStatesIntervalTimer || nearState == Near_State_sitiuation.idle)
-        {
-            nearState = (Near_State_sitiuation)Random.Range(0, 3);
-            counter++;
-            if (nearState == Near_State_sitiuation.shield)
-            {
-                if (ShieldCreated == true)
-                {
-
-                }
-            }
-            if (nearState == Near_State_sitiuation.explosion)
-            {
-                if (ShieldCreated == true)
-                {
-
-                }
-            }
-            if (nearState == Near_State_sitiuation.tired)
-            {
-                if (ShieldCreated == true)
-                {
-
-                }
-            }
-            NearStatesTransitionTimer = 0; //we will reset it because the transcurrido here will count the secconds assummed
-        }
-    }
-
-
-
+   
     public void EnableLaser()
     {
         spawnedLaser.SetActive(true);

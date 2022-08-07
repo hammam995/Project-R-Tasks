@@ -25182,7 +25182,7 @@ MonoBehaviour:
   TheTired: {fileID: 5367016196879307850, guid: da243a60a37b770458cd072051c61bcf, type: 3}
   StatePivot: {fileID: 2064748943}
   TiredCreated: 0
-  CircularPercentage: 100
+  CircularPercentage: 60
   _speed: 30
   min360: 0
   max360: 0
@@ -25191,7 +25191,7 @@ MonoBehaviour:
   laserPrefab: {fileID: 7964727266491681533, guid: eef143bebde225843b98f7d11c7d25a0, type: 3}
   firePoint: {fileID: 1616384934}
   maximumLength: 25
-  CircularPercentage_2: 51
+  CircularPercentage_2: 40
   _speed_2: 40
   CircularCreated_2: 0
   min360_2: 0
