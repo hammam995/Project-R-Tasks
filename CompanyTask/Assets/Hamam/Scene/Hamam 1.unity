@@ -25158,6 +25158,7 @@ MonoBehaviour:
   ShootTimer: 0
   ShootingIntervalTime_2: 3
   ShootTimer_2: 0
+  Timer_2: 0
   radius: 22.06
   Nearradius: 4.51
   angle: 360
@@ -25188,7 +25189,7 @@ MonoBehaviour:
   CircularCreated: 0
   _rotation: {x: 0, y: 1, z: 0}
   laserPrefab: {fileID: 7964727266491681533, guid: eef143bebde225843b98f7d11c7d25a0, type: 3}
-  firePoint: {fileID: 7452642285960575330}
+  firePoint: {fileID: 1616384934}
   maximumLength: 25
   CircularPercentage_2: 51
   _speed_2: 40
@@ -25197,6 +25198,7 @@ MonoBehaviour:
   max360_2: 0
   _rotation_2: {x: 0, y: 1, z: 0}
   maximumLength_2: 0
+  Extent: 0
 --- !u!95 &1806183083
 Animator:
   serializedVersion: 3

@@ -146,9 +146,6 @@ public class EnemyAi2 : MonoBehaviour
 
 
 
-
-
-
     private void Awake()
     {
         FindingPlayer(); // checked
@@ -168,7 +165,7 @@ public class EnemyAi2 : MonoBehaviour
         lr_2 = spawnedLaser_2.transform.GetChild(0).GetComponent<LineRenderer>();
         DisableLaser_2();
 
-
+        //checked
 
 
 
@@ -188,7 +185,7 @@ public class EnemyAi2 : MonoBehaviour
                     CurrentState = "far Distance";
                     transform.LookAt(player);
                     Timer2();
-
+                    // Checked far distance
                     break;
                 case AI_Distance_State.nearDistance:
                     ShootTimer = 0;
@@ -416,8 +413,6 @@ public class EnemyAi2 : MonoBehaviour
         max360 = CircularPercentage;
         min360_2 = max360 + 1;
         max360_2 = min360_2 + CircularPercentage_2;
-
-
         /*
         minShield = 0;
         maxShield = ShieldPercentage;
@@ -449,6 +444,7 @@ public class EnemyAi2 : MonoBehaviour
             if (dist <= Nearradius) // if near
             {
                 ShootTimer = 0;
+                DisableLaser_2();
                 aiState = AI_Distance_State.nearDistance;
                 //transform.LookAt(player);
             }
@@ -479,6 +475,10 @@ public class EnemyAi2 : MonoBehaviour
                 DisableLaser();
                 // Destroy(instTired);
             }
+           /* if (aiState != AI_Distance_State.nearDistance)
+            {
+                DisableLaser_2();
+            }*/
 
 
 
