@@ -144,7 +144,18 @@ public class EnemyAi2 : MonoBehaviour
     // we will use laser prefap
     // rather than fire poinr , use the Bullet Pivot
 
+    public float Rotation_Torret;
+    public GameObject Laser_Child;
+    public Vector3 R1;
+    public Vector3 R2;
+    public float timeCount=0;
 
+    public float t;
+    public bool T;
+    public float Rand;
+    public float myFloat = 0; // the time will start from 0
+    public int tiempoEntreMens = 1; // the time that which we enter it , and iit does not matter if we change it
+    public int transcurrido = 0; // the counter or the pinter which is i
 
     private void Awake()
     {
@@ -159,33 +170,67 @@ public class EnemyAi2 : MonoBehaviour
         spawnedLaser = Instantiate(laserPrefab, firePoint.transform) as GameObject;
         lr = spawnedLaser.transform.GetChild(0).GetComponent<LineRenderer>();
         DisableLaser();
+        //GameObject Child = GameObjectsTransform.GetChild(The child index).gameObject
+
         //
 
         spawnedLaser_2 = Instantiate(laserPrefab, BulletPivot.transform) as GameObject;
         lr_2 = spawnedLaser_2.transform.GetChild(0).GetComponent<LineRenderer>();
+        Laser_Child = spawnedLaser_2.transform.GetChild(0).gameObject;
         DisableLaser_2();
+        StartCoroutine(RotationRoutine());
 
         //checked
 
 
+        //  R1 = new Vector3(Laser_Child.transform.rotation.x, 0, Laser_Child.transform.rotation.z); ;
+        //  R2 = new Vector3(Laser_Child.transform.rotation.x, Random.Range(-2f, 2f), Laser_Child.transform.rotation.z);
+        //Laser_Child.transform.localEulerAngles = new Vector3(Laser_Child.transform.rotation.x, 0, Laser_Child.transform.rotation.z);
+        // Laser_Child.transform.localEulerAngles = new Vector3(Laser_Child.transform.rotation.x, Random.Range(-2f, 2f), Laser_Child.transform.rotation.z);
 
 
     }
 
     void Update()
     {
+        /* t += 0.1f * Time.deltaTime;
+         if (t >= 1)
+         {
+             t = 0;
+         }
+         */
+        /*  if (T == false)
+          {
+              t += t * Time.deltaTime;
+              if (t > 1)
+                  T = true;
+          }
+          else
+          {
+              t = 0;
+              T = false;
+
+          }
+
+          */
+
+
+
         if (StartEnemySystem)
         {
             NearStatesActions();
+
             // new switch case depend on the field of the view
             switch (aiState)
             {
                 case AI_Distance_State.farDistance:
 
                     CurrentState = "far Distance";
-                    transform.LookAt(player);
-                    Timer2();
+                     transform.LookAt(player);
+                     myt();
+                     Timer2();
                     // Checked far distance
+                    EnableLaser_2();
                     break;
                 case AI_Distance_State.nearDistance:
                     ShootTimer = 0;
@@ -258,6 +303,59 @@ public class EnemyAi2 : MonoBehaviour
             }
         }
         
+    }
+
+
+    public void myt()
+    {
+        myFloat += Time.deltaTime;
+        if (myFloat >= 0.3f)    // in each seccond we will check enter to see the condition
+        {
+            if (transcurrido >= tiempoEntreMens)
+            {
+                Rand = Random.Range(-2.5f, 2.5f);
+
+                transcurrido = 0; //make the pointer 0 to reset it
+                return; /// it will return to the first if
+            }
+            transcurrido++;
+            myFloat = 0; //we will reset it because the transcurrido here will count the secconds assummed
+
+
+
+        }
+    }
+
+
+
+    public IEnumerator RotationRoutine()
+    {
+        
+        WaitForSeconds wait = new WaitForSeconds(0.3f); // the wait time to check from the vision system , every seccond we will do it how many times
+       Laser_Child.transform.localEulerAngles = new Vector3(Laser_Child.transform.rotation.x, 0, Laser_Child.transform.rotation.z);
+
+        
+        while (true) // infinite loop in the coroutine as long is the condition is true , we will keep doing thi routine of seeing the player permenantly
+        {
+
+         //   Rand = Random.Range(-2.5f, 2.5f);
+
+            R1 = new Vector3(Mathf.LerpAngle(Laser_Child.transform.rotation.x, Laser_Child.transform.rotation.x,  1f),
+                              Mathf.LerpAngle(Laser_Child.transform.rotation.y, Rand, 1f),
+                              Mathf.LerpAngle(Laser_Child.transform.rotation.z, Laser_Child.transform.rotation.z, 1f)
+                );
+
+
+             Laser_Child.transform.localEulerAngles = R1;
+
+
+            yield return wait;
+            // Laser_Child.transform.localEulerAngles = new Vector3(Laser_Child.transform.rotation.x, Random.Range(-2f, 2f), Laser_Child.transform.rotation.z);
+            //    R1 = new Vector3(Laser_Child.transform.rotation.x, Laser_Child.transform.rotation.y, Laser_Child.transform.rotation.z); ;
+            //    R2 = new Vector3(Laser_Child.transform.rotation.x, Random.Range(-2f, 2f), Laser_Child.transform.rotation.z);
+            //  transform.rotation = Quaternion.Lerp(from.rotation, to.rotation, timeCount * speed);
+            //  timeCount = timeCount + Time.deltaTime;
+        }
     }
 
     private IEnumerator FOVRoutine()
@@ -439,10 +537,12 @@ public class EnemyAi2 : MonoBehaviour
     public void EnableLaser()
     {
         spawnedLaser.SetActive(true);
+
     }
     public void DisableLaser()
     {
         spawnedLaser.SetActive(false);
+
     }
 
     public void Laser_L()
@@ -456,10 +556,15 @@ public class EnemyAi2 : MonoBehaviour
     {
         Laser_L_2();
         spawnedLaser_2.SetActive(true);
+       // Laser_Child.transform.localEulerAngles = new Vector3(Laser_Child.transform.rotation.x, Random.Range(-2, 2), Laser_Child.transform.rotation.z);
+
     }
     public void DisableLaser_2()
     {
+
         spawnedLaser_2.SetActive(false);
+       // Laser_Child.transform.localEulerAngles = new Vector3(Laser_Child.transform.rotation.x, 0, Laser_Child.transform.rotation.z);
+       // Laser_Child.transform.localEulerAngles = new Vector3(Laser_Child.transform.rotation.x, Random.Range(-2f, 2f), Laser_Child.transform.rotation.z);
     }
     public void Laser_L_2()
     {
